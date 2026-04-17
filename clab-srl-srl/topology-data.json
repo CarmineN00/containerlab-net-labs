@@ -1,0 +1,105 @@
+{
+  "name": "srl-srl",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "clab",
+        "bridge": "br-5595feec5aa4",
+        "ipv4-subnet": "172.20.20.0/24",
+        "ipv4-gw": "172.20.20.1",
+        "ipv6-subnet": "3fff:172:20:20::/64",
+        "ipv6-gw": "3fff:172:20:20::1",
+        "external-access": true
+      }
+    }
+  },
+  "ssh-pub-keys": [],
+  "nodes": {
+    "srl1": {
+      "index": "0",
+      "shortname": "srl1",
+      "longname": "clab-srl-srl-srl1",
+      "fqdn": "srl1.srl-srl.io",
+      "group": "",
+      "labdir": "/home/carnapolit/containerlab-net-labs/clab-srl-srl/srl1",
+      "kind": "nokia_srlinux",
+      "image": "ghcr.io/nokia/srlinux:24.10",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "1a:01:00:00:00:00",
+      "labels": {
+        "clab-git-branch": "master",
+        "clab-git-hash": "ac279ba",
+        "clab-mgmt-net-bridge": "br-5595feec5aa4",
+        "clab-node-group": "",
+        "clab-node-kind": "nokia_srlinux",
+        "clab-node-lab-dir": "/home/carnapolit/containerlab-net-labs/clab-srl-srl/srl1",
+        "clab-node-longname": "clab-srl-srl-srl1",
+        "clab-node-name": "srl1",
+        "clab-node-type": "ixr-d2l",
+        "clab-owner": "carnapolit",
+        "clab-topo-file": "/home/carnapolit/containerlab-net-labs/srl-srl.clab.yml",
+        "containerlab": "srl-srl"
+      },
+      "port-bindings": [
+      ]
+    },
+    "srl2": {
+      "index": "1",
+      "shortname": "srl2",
+      "longname": "clab-srl-srl-srl2",
+      "fqdn": "srl2.srl-srl.io",
+      "group": "",
+      "labdir": "/home/carnapolit/containerlab-net-labs/clab-srl-srl/srl2",
+      "kind": "nokia_srlinux",
+      "image": "ghcr.io/nokia/srlinux:24.10",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "1a:2e:01:00:00:00",
+      "labels": {
+        "clab-git-branch": "master",
+        "clab-git-hash": "ac279ba",
+        "clab-mgmt-net-bridge": "br-5595feec5aa4",
+        "clab-node-group": "",
+        "clab-node-kind": "nokia_srlinux",
+        "clab-node-lab-dir": "/home/carnapolit/containerlab-net-labs/clab-srl-srl/srl2",
+        "clab-node-longname": "clab-srl-srl-srl2",
+        "clab-node-name": "srl2",
+        "clab-node-type": "ixr-d2l",
+        "clab-owner": "carnapolit",
+        "clab-topo-file": "/home/carnapolit/containerlab-net-labs/srl-srl.clab.yml",
+        "containerlab": "srl-srl"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+    {
+      "endpoints": {
+        "a": {
+          "node": "srl1",
+          "interface": "e1-1",
+          "mac": "aa:c1:ab:61:79:69",
+          "peer": "z"
+        },
+        "z": {
+          "node": "srl2",
+          "interface": "e1-1",
+          "mac": "aa:c1:ab:f4:bf:26",
+          "peer": "a"
+        }
+      }
+    }
+  ]
+}
