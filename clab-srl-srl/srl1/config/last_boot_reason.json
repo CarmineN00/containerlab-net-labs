@@ -3,6 +3,6 @@
  "chassis_serial_number": "Sim Serial No.",
  "last_boot_reason": "REASON_UNSET",
  "standby_ready": false,
- "file_written_at_unix_time": "2026-04-17T17:19:55.038Z",
- "file_written_at_unix_time_ns": "1776446395038272791"
+ "file_written_at_unix_time": "2026-04-18T12:09:43.106Z",
+ "file_written_at_unix_time_ns": "1776514183106551117"
 }
