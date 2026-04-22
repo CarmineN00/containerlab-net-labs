@@ -4,10 +4,10 @@
       "generated-by": "SRLINUX",
       "name": "",
       "comment": "",
-      "created": "2026-04-18T13:48:22.217Z",
+      "created": "2026-04-22T09:20:28.076Z",
       "release": "v24.10.6",
       "enabled-yang-features": ["srl_nokia-features:aaa-spiffe-id", "srl_nokia-features:aaa-superuser", "srl_nokia-features:acl-cpm-filter-type-mac", "srl_nokia-features:acl-filter-allowed-on-irb-interfaces", "srl_nokia-features:acl-filter-allowed-on-l2-interfaces", "srl_nokia-features:acl-ip-prefix-list", "srl_nokia-features:acl-policer", "srl_nokia-features:acl-subinterface-entry-statistics", "srl_nokia-features:admin-user-roles", "srl_nokia-features:anycast-gw", "srl_nokia-features:arp-nd-datapath-programming", "srl_nokia-features:backplane-facing-capacity", "srl_nokia-features:bfd", "srl_nokia-features:bgp-add-paths", "srl_nokia-features:bgp-afi-safi-policy", "srl_nokia-features:bgp-auth-password", "srl_nokia-features:bgp-cfg-afi-safi-list", "srl_nokia-features:bgp-graceful-restart-gaps", "srl_nokia-features:bgp-import-export-policy-leaflist", "srl_nokia-features:bgp-ipv6-next-hop-tunnel-resolution", "srl_nokia-features:bgp-local-as-container-iso-list", "srl_nokia-features:bgp-max-ecmp-hash-buckets", "srl_nokia-features:bgp-mtu-discovery", "srl_nokia-features:bgp-multipath-maximum-paths", "srl_nokia-features:bgp-multipath-maximum-paths-limit-128", "srl_nokia-features:bgp-prefix-limit", "srl_nokia-features:bgp-prefix-limit-last-exceeded", "srl_nokia-features:bgp-prefix-limit-received", "srl_nokia-features:bgp-restart-max-wait", "srl_nokia-features:bgp-rib-afi-safi-list", "srl_nokia-features:bgp-rib-afi-safi-list-for-evpn", "srl_nokia-features:bgp-rib-afi-safi-route", "srl_nokia-features:bgp-rtc", "srl_nokia-features:bgp-single-hop-connected-check", "srl_nokia-features:bgp-unnumbered-peers", "srl_nokia-features:bridged", "srl_nokia-features:bt-split-horizon-groups", "srl_nokia-features:chassis-vertical-orientation", "srl_nokia-features:cli-plugin-authorization", "srl_nokia-features:combined-bgp-ecmp", "srl_nokia-features:config-l2-mtu-default", "srl_nokia-features:config-sub-if-l2-mtu", "srl_nokia-features:dac-link-training", "srl_nokia-features:dhcp-relay-fqdn", "srl_nokia-features:dot1q-vlan-ranges", "srl_nokia-features:dynamic-tcam", "srl_nokia-features:event-handler", "srl_nokia-features:evpn", "srl_nokia-features:evpn-ifl-unequal-ecmp", "srl_nokia-features:evpn-mh", "srl_nokia-features:evpn-mh-ip-aliasing", "srl_nokia-features:evpn-mh-multicast-non-df-tcam-resource", "srl_nokia-features:evpn-mh-virtual-es", "srl_nokia-features:evpn-route-internal-tags", "srl_nokia-features:factory-reset", "srl_nokia-features:fib-programming-progress", "srl_nokia-features:fixed", "srl_nokia-features:gnmi-extensions", "srl_nokia-features:gnmi-services", "srl_nokia-features:gnoi-bgp", "srl_nokia-features:gnoi-export-protos", "srl_nokia-features:gnoi-healthz", "srl_nokia-features:gnsi-accounting", "srl_nokia-features:gnsi-authz", "srl_nokia-features:gnsi-certz", "srl_nokia-features:gnsi-credentialz", "srl_nokia-features:gnsi-pathz", "srl_nokia-features:grpc-server", "srl_nokia-features:grpc-server-max-concurrent-streams", "srl_nokia-features:icmp-rate-control", "srl_nokia-features:igmp", "srl_nokia-features:igmp-snooping", "srl_nokia-features:ingress-subif-policing", "srl_nokia-features:inter-as-nhsrr-ipvpn", "srl_nokia-features:interface-evpn-internal-tags", "srl_nokia-features:interface-references", "srl_nokia-features:internal-tags", "srl_nokia-features:ip-acl-dscp-set", "srl_nokia-features:ip-qos-multifield", "srl_nokia-features:ipv4-unnumbered", "srl_nokia-features:ipvpn-route-internal-tags", "srl_nokia-features:isis-level-passive", "srl_nokia-features:isis-lsdb", "srl_nokia-features:isis-mi", "srl_nokia-features:isis-mt", "srl_nokia-features:isis-nsf", "srl_nokia-features:l2-proxy-arp", "srl_nokia-features:l2-proxy-arp-nd-control-flood-on-evpn", "srl_nokia-features:l2-proxy-arp-nd-route-internal-tags", "srl_nokia-features:l2-proxy-nd", "srl_nokia-features:l2cp-transparency", "srl_nokia-features:l3-proxy-arp", "srl_nokia-features:l3-proxy-arp-irb", "srl_nokia-features:l3-proxy-nd", "srl_nokia-features:l3-proxy-nd-irb", "srl_nokia-features:lacp-fallback", "srl_nokia-features:lag", "srl_nokia-features:lag-forwarding-viable", "srl_nokia-features:license", "srl_nokia-features:longest-prefix-match", "srl_nokia-features:maintenance-mode-improvements", "srl_nokia-features:mcast-route-policy", "srl_nokia-features:mirror-dest-local", "srl_nokia-features:mirror-dest-remote", "srl_nokia-features:mirror-dest-remote-tunnel-encap-l2ogre", "srl_nokia-features:mirror-source-acl", "srl_nokia-features:mirror-source-intf", "srl_nokia-features:mirror-source-subintf", "srl_nokia-features:mirroring", "srl_nokia-features:mirroring-intf-stats", "srl_nokia-features:mld", "srl_nokia-features:mld-snooping", "srl_nokia-features:named-queues-and-named-fcs", "srl_nokia-features:ndk-auto-telemetry-state", "srl_nokia-features:ndk-disable-caching", "srl_nokia-features:netconf", "srl_nokia-features:nhsrr-evpn", "srl_nokia-features:openconfig", "srl_nokia-features:packet-tracer", "srl_nokia-features:pim", "srl_nokia-features:platform-7220-d2", "srl_nokia-features:policy-based-forwarding-dscp-ip-protocol", "srl_nokia-features:policy-based-forwarding-nh-transport", "srl_nokia-features:port-fec-clause74", "srl_nokia-features:port-speed-100G", "srl_nokia-features:port-speed-10G", "srl_nokia-features:port-speed-1G", "srl_nokia-features:port-speed-25G", "srl_nokia-features:port-speed-40G", "srl_nokia-features:qos", "srl_nokia-features:qos-dot1p-classifier-policy", "srl_nokia-features:qos-dot1p-rewrite-policy", "srl_nokia-features:qos-drop-probability", "srl_nokia-features:qos-dscp-classifier-policy", "srl_nokia-features:qos-dscp-rewrite-policy", "srl_nokia-features:qos-ecn", "srl_nokia-features:qos-irb-subinterface", "srl_nokia-features:qos-management-protocols-dscp", "srl_nokia-features:qos-multicast-queue", "srl_nokia-features:qos-queue-high-threshold", "srl_nokia-features:qos-queue-management-profile", "srl_nokia-features:qos-rewrite-dot1p", "srl_nokia-features:qos-scheduler-policies", "srl_nokia-features:qos-unicast-queue", "srl_nokia-features:qos-vxlan-classifier-policy", "srl_nokia-features:qos-wred-traffic-type-tcp", "srl_nokia-features:ra-guard", "srl_nokia-features:radius-source-address", "srl_nokia-features:reload-delay", "srl_nokia-features:route-leaking", "srl_nokia-features:routing-policy-bgp-med", "srl_nokia-features:routing-policy-bgp-next-hop-self-action", "srl_nokia-features:routing-policy-bgp-next-hop-set-action", "srl_nokia-features:routing-policy-community-match-set-options", "srl_nokia-features:routing-policy-match-protocol-redefine", "srl_nokia-features:routing-policy-named-statements", "srl_nokia-features:routing-policy-next-policy", "srl_nokia-features:routing-policy-next-statement", "srl_nokia-features:routing-policy-preference-action", "srl_nokia-features:routing-policy-tag-set-match-options", "srl_nokia-features:segment-routing-adjacency-sid", "srl_nokia-features:segment-routing-shared-sid", "srl_nokia-features:sflow", "srl_nokia-features:show-acl-aclfilter", "srl_nokia-features:snmp-counters", "srl_nokia-features:snmp-over-tcp", "srl_nokia-features:snmp-tools-trap", "srl_nokia-features:snmp-traps", "srl_nokia-features:snmp-v3", "srl_nokia-features:static-route-tag-set", "srl_nokia-features:static-route-tag-value", "srl_nokia-features:storm-control", "srl_nokia-features:storm-control-action", "srl_nokia-features:subif-acl-policer", "srl_nokia-features:subif-policer", "srl_nokia-features:system-forwarding-mode", "srl_nokia-features:system-hash-seed-from-mac", "srl_nokia-features:system-resource-tunnels", "srl_nokia-features:system-resource-utilization", "srl_nokia-features:system-resource-vp-lag-groups", "srl_nokia-features:tacacs-source-address", "srl_nokia-features:trident3", "srl_nokia-features:unequal-ecmp", "srl_nokia-features:unified-forwarding-tables", "srl_nokia-features:virtual-ip-discovery", "srl_nokia-features:vlan-id-optional", "srl_nokia-features:vlan-tpid", "srl_nokia-features:vxlan", "srl_nokia-features:vxlan-stats", "srl_nokia-features:warm-reboot"],
-      "checksum": "c009c5e8bee3f51a$6850cdc4f9f328bd5af43c8500ba6c95481e9936"
+      "checksum": "80d315af69580c02$21567153152e0f9838d4fa7873eb23ed978590ff"
     },
     "build": {
       "git-branch": "SRL_24_10_B1",
@@ -16,8 +16,73 @@
     },
     "application": [
       {
-        "name": "arp_nd_mgr",
-        "path": "/opt/srlinux/bin/sr_arp_nd_mgr",
+        "name": "oc_mgmt_server",
+        "path": "/opt/srlinux/bin/sr_oc_mgmt_server",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "oc_common",
+        "path": "n/a",
+        "version": "n/a"
+      },
+      {
+        "name": "dhcp_server_mgr",
+        "path": "/opt/srlinux/bin/sr_dhcp_server_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "l2_mac_learn_mgr",
+        "path": "/opt/srlinux/bin/sr_l2_mac_learn_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "vxlan_mgr",
+        "path": "/opt/srlinux/bin/sr_vxlan_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "dhcp_relay_mgr",
+        "path": "/opt/srlinux/bin/sr_dhcp_relay_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "event_mgr",
+        "path": "/opt/srlinux/bin/sr_event_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "qos_mgr",
+        "path": "/opt/srlinux/bin/sr_qos_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "mirror_mgr",
+        "path": "/opt/srlinux/bin/sr_mirror_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "evpn_mgr",
+        "path": "/opt/srlinux/bin/sr_evpn_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "dhcp_client_mgr",
+        "path": "/opt/srlinux/bin/sr_dhcp_client_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "log_mgr",
+        "path": "/opt/srlinux/bin/sr_log_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "netconf_mgr",
+        "path": "/opt/srlinux/bin/sr_netconf_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "mcid_mgr",
+        "path": "/opt/srlinux/bin/sr_mcid_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
@@ -31,8 +96,48 @@
         "version": "n/a"
       },
       {
-        "name": "mplsoam_mgr",
-        "path": "/opt/srlinux/bin/sr_mplsoam_mgr",
+        "name": "chassis_mgr",
+        "path": "/opt/srlinux/bin/sr_chassis_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "l2_proxy_arp_nd_mgr",
+        "path": "/opt/srlinux/bin/sr_l2_proxy_arp_nd_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "supportd",
+        "path": "/opt/srlinux/bin/sr_supportd",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "license_mgr",
+        "path": "/opt/srlinux/bin/sr_license_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "gretunnel_mgr",
+        "path": "/opt/srlinux/bin/sr_gretunnel_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "app_mgr",
+        "path": "/opt/srlinux/bin/sr_app_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "pim_mgr",
+        "path": "/opt/srlinux/bin/sr_pim_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "xdp_cpm",
+        "path": "/opt/srlinux/bin/sr_xdp_cpm",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "grpc_server",
+        "path": "/opt/srlinux/bin/sr_grpc_server",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
@@ -41,18 +146,23 @@
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
-        "name": "igmp_mgr",
-        "path": "/opt/srlinux/bin/sr_igmp_mgr",
+        "name": "ospf_mgr",
+        "path": "/opt/srlinux/bin/sr_ospf_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
-        "name": "lldp_mgr",
-        "path": "/opt/srlinux/bin/sr_lldp_mgr",
+        "name": "pw_mgr",
+        "path": "/opt/srlinux/bin/sr_pw_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
-        "name": "pinger",
-        "path": "/opt/srlinux/bin/sr_pinger",
+        "name": "mpls_mgr",
+        "path": "/opt/srlinux/bin/sr_mpls_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "label_mgr",
+        "path": "/opt/srlinux/bin/sr_label_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
@@ -61,13 +171,48 @@
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
-        "name": "acl_mgr",
-        "path": "/opt/srlinux/bin/sr_acl_mgr",
+        "name": "ethcfm_mgr",
+        "path": "/opt/srlinux/bin/sr_ethcfm_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
-        "name": "ethcfm_mgr",
-        "path": "/opt/srlinux/bin/sr_ethcfm_mgr",
+        "name": "twamp_mgr",
+        "path": "/opt/srlinux/bin/sr_twamp_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "radius_mgr",
+        "path": "/opt/srlinux/bin/sr_radius_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "time_mgr",
+        "path": "/opt/srlinux/bin/sr_time_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "net_inst_mgr",
+        "path": "/opt/srlinux/bin/sr_net_inst_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "json_rpc",
+        "path": "/opt/srlinux/bin/sr_json_rpc",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "aaa_mgr",
+        "path": "/opt/srlinux/bin/sr_aaa_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "sflow_sample_mgr",
+        "path": "/opt/srlinux/bin/sr_sflow_sample_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "xdp_lc",
+        "path": "/opt/srlinux/bin/sr_xdp_lc",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
@@ -76,8 +221,103 @@
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
-        "name": "ospf_mgr",
-        "path": "/opt/srlinux/bin/sr_ospf_mgr",
+        "name": "l2_static_mac_mgr",
+        "path": "/opt/srlinux/bin/sr_l2_static_mac_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "arp_nd_mgr",
+        "path": "/opt/srlinux/bin/sr_arp_nd_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "mplsoam_mgr",
+        "path": "/opt/srlinux/bin/sr_mplsoam_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "sdk_mgr",
+        "path": "/opt/srlinux/bin/sr_sdk_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "vrrp_mgr",
+        "path": "/opt/srlinux/bin/sr_vrrp_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "timing_stack",
+        "path": "/opt/srlinux/bin/sr_timing_stack",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "pinger",
+        "path": "/opt/srlinux/bin/sr_pinger",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "bfd_mgr",
+        "path": "/opt/srlinux/bin/sr_bfd_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "lag_mgr",
+        "path": "/opt/srlinux/bin/sr_lag_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "igmp_mgr",
+        "path": "/opt/srlinux/bin/sr_igmp_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "tepolicy_mgr",
+        "path": "/opt/srlinux/bin/sr_tepolicy_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "te_mgr",
+        "path": "/opt/srlinux/bin/sr_te_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "static_route_mgr",
+        "path": "/opt/srlinux/bin/sr_static_route_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "bgp_mgr",
+        "path": "/opt/srlinux/bin/sr_bgp_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "fib_mgr",
+        "path": "/opt/srlinux/bin/sr_fib_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "fhs_mgr",
+        "path": "/opt/srlinux/bin/sr_fhs_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "l2_mac_mgr",
+        "path": "/opt/srlinux/bin/sr_l2_mac_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "segrt_mgr",
+        "path": "/opt/srlinux/bin/sr_segrt_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "pcc_mgr",
+        "path": "/opt/srlinux/bin/sr_pcc_mgr",
+        "version": "2025-12-02T00:04:37.000Z"
+      },
+      {
+        "name": "acl_mgr",
+        "path": "/opt/srlinux/bin/sr_acl_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
@@ -116,43 +356,13 @@
         "version": "2023-05-08T20:05:00.000Z"
       },
       {
-        "name": "pw_mgr",
-        "path": "/opt/srlinux/bin/sr_pw_mgr",
+        "name": "dev_mgr",
+        "path": "/opt/srlinux/bin/sr_device_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
-        "name": "twamp_mgr",
-        "path": "/opt/srlinux/bin/sr_twamp_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "netconf_mgr",
-        "path": "/opt/srlinux/bin/sr_netconf_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "oam_mgr",
-        "path": "/opt/srlinux/bin/sr_oam_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "xdp_cpm",
-        "path": "/opt/srlinux/bin/sr_xdp_cpm",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "l2_proxy_arp_nd_mgr",
-        "path": "/opt/srlinux/bin/sr_l2_proxy_arp_nd_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "bgp_mgr",
-        "path": "/opt/srlinux/bin/sr_bgp_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "timing_stack",
-        "path": "/opt/srlinux/bin/sr_timing_stack",
+        "name": "idb_server",
+        "path": "/opt/srlinux/bin/sr_idb_server",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
@@ -166,228 +376,18 @@
         "version": "n/a"
       },
       {
-        "name": "l2_mac_mgr",
-        "path": "/opt/srlinux/bin/sr_l2_mac_mgr",
+        "name": "lldp_mgr",
+        "path": "/opt/srlinux/bin/sr_lldp_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
-        "name": "fib_mgr",
-        "path": "/opt/srlinux/bin/sr_fib_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "event_mgr",
-        "path": "/opt/srlinux/bin/sr_event_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "oc_mgmt_server",
-        "path": "/opt/srlinux/bin/sr_oc_mgmt_server",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "oc_common",
-        "path": "n/a",
-        "version": "n/a"
-      },
-      {
-        "name": "vrrp_mgr",
-        "path": "/opt/srlinux/bin/sr_vrrp_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "sdk_mgr",
-        "path": "/opt/srlinux/bin/sr_sdk_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "vxlan_mgr",
-        "path": "/opt/srlinux/bin/sr_vxlan_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "json_rpc",
-        "path": "/opt/srlinux/bin/sr_json_rpc",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "static_route_mgr",
-        "path": "/opt/srlinux/bin/sr_static_route_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "dhcp_client_mgr",
-        "path": "/opt/srlinux/bin/sr_dhcp_client_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "te_mgr",
-        "path": "/opt/srlinux/bin/sr_te_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "bfd_mgr",
-        "path": "/opt/srlinux/bin/sr_bfd_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "xdp_lc",
-        "path": "/opt/srlinux/bin/sr_xdp_lc",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "supportd",
-        "path": "/opt/srlinux/bin/sr_supportd",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "dhcp_server_mgr",
-        "path": "/opt/srlinux/bin/sr_dhcp_server_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "app_mgr",
-        "path": "/opt/srlinux/bin/sr_app_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "pim_mgr",
-        "path": "/opt/srlinux/bin/sr_pim_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "net_inst_mgr",
-        "path": "/opt/srlinux/bin/sr_net_inst_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "dhcp_relay_mgr",
-        "path": "/opt/srlinux/bin/sr_dhcp_relay_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "grpc_server",
-        "path": "/opt/srlinux/bin/sr_grpc_server",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "gretunnel_mgr",
-        "path": "/opt/srlinux/bin/sr_gretunnel_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "aaa_mgr",
-        "path": "/opt/srlinux/bin/sr_aaa_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "radius_mgr",
-        "path": "/opt/srlinux/bin/sr_radius_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "fhs_mgr",
-        "path": "/opt/srlinux/bin/sr_fhs_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "segrt_mgr",
-        "path": "/opt/srlinux/bin/sr_segrt_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "lag_mgr",
-        "path": "/opt/srlinux/bin/sr_lag_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "dev_mgr",
-        "path": "/opt/srlinux/bin/sr_device_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "label_mgr",
-        "path": "/opt/srlinux/bin/sr_label_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "mirror_mgr",
-        "path": "/opt/srlinux/bin/sr_mirror_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "idb_server",
-        "path": "/opt/srlinux/bin/sr_idb_server",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "qos_mgr",
-        "path": "/opt/srlinux/bin/sr_qos_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "license_mgr",
-        "path": "/opt/srlinux/bin/sr_license_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "chassis_mgr",
-        "path": "/opt/srlinux/bin/sr_chassis_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "l2_static_mac_mgr",
-        "path": "/opt/srlinux/bin/sr_l2_static_mac_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "evpn_mgr",
-        "path": "/opt/srlinux/bin/sr_evpn_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "sflow_sample_mgr",
-        "path": "/opt/srlinux/bin/sr_sflow_sample_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "pcc_mgr",
-        "path": "/opt/srlinux/bin/sr_pcc_mgr",
+        "name": "oam_mgr",
+        "path": "/opt/srlinux/bin/sr_oam_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       },
       {
         "name": "mfib_mgr",
         "path": "/opt/srlinux/bin/sr_mfib_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "tepolicy_mgr",
-        "path": "/opt/srlinux/bin/sr_tepolicy_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "mpls_mgr",
-        "path": "/opt/srlinux/bin/sr_mpls_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "mcid_mgr",
-        "path": "/opt/srlinux/bin/sr_mcid_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "log_mgr",
-        "path": "/opt/srlinux/bin/sr_log_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "l2_mac_learn_mgr",
-        "path": "/opt/srlinux/bin/sr_l2_mac_learn_mgr",
-        "version": "2025-12-02T00:04:37.000Z"
-      },
-      {
-        "name": "time_mgr",
-        "path": "/opt/srlinux/bin/sr_time_mgr",
         "version": "2025-12-02T00:04:37.000Z"
       }
     ],
@@ -1205,193 +1205,6 @@
         }
       }
     },
-    "srl_nokia-lldp:lldp": {
-      "admin-state": "enable"
-    },
-    "srl_nokia-dns:dns": {
-      "network-instance": "mgmt",
-      "server-list": [
-        "10.255.255.254"
-      ]
-    },
-    "srl_nokia-system-snmp:snmp": {
-      "access-group": [
-        {
-          "name": "SNMPv2-RO-Community",
-          "security-level": "no-auth-no-priv",
-          "community-entry": [
-            {
-              "name": "RO-Community",
-              "community": "$aes1$AWDdNofHiaxQ2m8=$VB/aED4mLQ6jFQ6p/dHAgg=="
-            }
-          ]
-        }
-      ],
-      "network-instance": [
-        {
-          "name": "mgmt",
-          "admin-state": "enable"
-        }
-      ]
-    },
-    "srl_nokia-ssh:ssh-server": [
-      {
-        "name": "mgmt",
-        "admin-state": "enable",
-        "network-instance": "mgmt",
-        "use-credentialz": true
-      },
-      {
-        "name": "mgmt-netconf",
-        "admin-state": "enable",
-        "network-instance": "mgmt",
-        "port": 830,
-        "disable-shell": true
-      }
-    ],
-    "srl_nokia-system-banner:banner": {
-      "login-banner": "................................................................\n:                  Welcome to Nokia SR Linux!                  :\n:              Open Network OS for the NetOps era.             :\n:                                                              :\n:    This is a freely distributed official container image.    :\n:                      Use it - Share it                       :\n:                                                              :\n: Get started: https://learn.srlinux.dev                       :\n: Container:   https://go.srlinux.dev/container-image          :\n: Docs:        https://doc.srlinux.dev/24-10                   :\n: Rel. notes:  https://doc.srlinux.dev/rn24-10-6               :\n: YANG:        https://yang.srlinux.dev/v24.10.6               :\n: Discord:     https://go.srlinux.dev/discord                  :\n: Contact:     https://go.srlinux.dev/contact-sales            :\n................................................................\n"
-    },
-    "srl_nokia-tls:tls": {
-      "server-profile": [
-        {
-          "name": "clab-profile",
-          "key": "$aes1$ATT/uHAaeFxpJW8=$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",
-          "certificate": "-----BEGIN CERTIFICATE-----\nMIID1DCCArygAwIBAgICBnowDQYJKoZIhvcNAQELBQAwUzELMAkGA1UEBhMCVVMx\nCTAHBgNVBAcTADEVMBMGA1UEChMMY29udGFpbmVybGFiMQkwBwYDVQQLEwAxFzAV\nBgNVBAMTDnNybC1zcmwgbGFiIENBMB4XDTI2MDQxNzE3MTk1MFoXDTI3MDQxNzE3\nMTk1MFowVDELMAkGA1UEBhMCVVMxCTAHBgNVBAcTADEVMBMGA1UEChMMY29udGFp\nbmVybGFiMQkwBwYDVQQLEwAxGDAWBgNVBAMTD3NybDIuc3JsLXNybC5pbzCCASIw\nDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANYP4071E08odr8H9+bcMrqlivXu\nD4KUA+htl0Yckt3l2T7Be4yzBJxpsueiBbM98ewpr/wR1xGwmxIOOuT7YOUAUbVd\nvQ+/Bba1l2fK3F5Vz1qepPcMu+opXHeFCUQLiLrGXaQy6gbHhcuxVsYpRvl6DmpT\nv+4LBy0XWRhr3HrDfFjFWPW0o15Aqn6KruxtI6RF6kThXfShiOD+3VHya+ZwSrEF\nB87jaKUQZKD2uWBpN1DE2plF+bpSUJ0nNcceG/TQxD/VuJqqcTapr5wJe2FOVqIx\n5rQ0hwypA87Hlpt2TtKtKq400CF5qCa7t1axc6WpbMCwtEeM4mF/BBUOdkUCAwEA\nAaOBsDCBrTAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsG\nAQUFBwMBMA4GA1UdDgQHBAUBAgMEBjAfBgNVHSMEGDAWgBTe+fcfg5jcdNgM46lC\nY+NogowxHzBLBgNVHREERDBCggRzcmwyghFjbGFiLXNybC1zcmwtc3JsMoIPc3Js\nMi5zcmwtc3JsLmlvhwSsFBQDhxA//wFyACAAIAAAAAAAAAADMA0GCSqGSIb3DQEB\nCwUAA4IBAQCrDD9QT0VXi9QppyvJtNwDI5lXvODnwm8ZA4+VXkFVJ9+31HYSjX6W\njJUVKAl06KCjeswp7jrmVjdOR5EatUg9rSEPJ248/zVdkMFgrox96fGsk8S20QFD\nyRWBMD/KGT5qFtmXk8M3xleLQAtdLOjT6OMGoqUQ+T9OZpTGFSfBdQ/Ytv4812nw\nIbdD6hezqAcaUisch6PBVJqzbpnrbLw0DEbI9BGZQS9I0LhQYiLlNDiHNlZZrq2e\niSRU1553nCK0TZKWMj83d2MO30YrwEsd6SEtR1FC3YEh+UdbqiSDLxXy4R2yZt5a\naLglf1075z4HUoFqeKDoDuNo5m3I3zHn\n-----END CERTIFICATE-----\n",
-          "authenticate-client": false
-        }
-      ]
-    },
-    "srl_nokia-netconf-server:netconf-server": [
-      {
-        "name": "mgmt",
-        "admin-state": "enable",
-        "ssh-server": "mgmt-netconf"
-      }
-    ],
-    "srl_nokia-json-rpc:json-rpc-server": {
-      "admin-state": "enable",
-      "network-instance": [
-        {
-          "name": "mgmt",
-          "http": {
-            "admin-state": "enable"
-          },
-          "https": {
-            "admin-state": "enable",
-            "tls-profile": "clab-profile"
-          }
-        }
-      ]
-    },
-    "srl_nokia-grpc:grpc-server": [
-      {
-        "name": "eda-discovery",
-        "admin-state": "enable",
-        "rate-limit": 65535,
-        "session-limit": 1024,
-        "metadata-authentication": true,
-        "default-tls-profile": true,
-        "network-instance": "mgmt",
-        "port": 50052,
-        "services": [
-          "srl_nokia-grpc:gnmi",
-          "srl_nokia-grpc:gnsi"
-        ]
-      },
-      {
-        "name": "eda-insecure-mgmt",
-        "admin-state": "enable",
-        "rate-limit": 65535,
-        "session-limit": 1024,
-        "metadata-authentication": true,
-        "port": 57411,
-        "services": [
-          "srl_nokia-grpc:gnmi",
-          "srl_nokia-grpc:gnoi",
-          "srl_nokia-grpc:gnsi"
-        ]
-      },
-      {
-        "name": "eda-mgmt",
-        "admin-state": "enable",
-        "rate-limit": 65535,
-        "session-limit": 1024,
-        "metadata-authentication": true,
-        "tls-profile": "EDA",
-        "network-instance": "mgmt",
-        "port": 57410,
-        "services": [
-          "srl_nokia-grpc:gnmi",
-          "srl_nokia-grpc:gnoi",
-          "srl_nokia-grpc:gnsi"
-        ]
-      },
-      {
-        "name": "insecure-mgmt",
-        "admin-state": "enable",
-        "rate-limit": 65000,
-        "network-instance": "mgmt",
-        "port": 57401,
-        "trace-options": [
-          "request",
-          "response",
-          "common"
-        ],
-        "services": [
-          "srl_nokia-grpc:gnmi",
-          "srl_nokia-grpc:gnoi",
-          "srl_nokia-grpc:gnsi",
-          "srl_nokia-grpc:gribi",
-          "srl_nokia-grpc:p4rt"
-        ],
-        "unix-socket": {
-          "admin-state": "enable"
-        }
-      },
-      {
-        "name": "mgmt",
-        "admin-state": "enable",
-        "rate-limit": 65000,
-        "tls-profile": "clab-profile",
-        "network-instance": "mgmt",
-        "trace-options": [
-          "request",
-          "response",
-          "common"
-        ],
-        "services": [
-          "srl_nokia-grpc:gnmi",
-          "srl_nokia-grpc:gnoi",
-          "srl_nokia-grpc:gnsi",
-          "srl_nokia-grpc:gribi",
-          "srl_nokia-grpc:p4rt"
-        ],
-        "unix-socket": {
-          "admin-state": "enable"
-        }
-      }
-    ],
-    "srl_nokia-aaa:aaa": {
-      "authentication": {
-        "idle-timeout": 7200,
-        "authentication-method": [
-          "local"
-        ],
-        "linuxadmin-user": {
-          "password": "$y$j9T$stzvOCbF8uAyS3ERP.QBq0$/PwHooL52TgjkOqLTO7FfxepNgmv/ZnGhvfYXznZZF5"
-        }
-      },
-      "server-group": [
-        {
-          "name": "local",
-          "type": "srl_nokia-aaa-types:local"
-        }
-      ]
-    },
-    "srl_nokia-system-name:name": {
-      "host-name": "NSRL-R2"
-    },
     "srl_nokia-logging:logging": {
       "buffer": [
         {
@@ -1536,8 +1349,301 @@
           ]
         }
       ]
+    },
+    "srl_nokia-netconf-server:netconf-server": [
+      {
+        "name": "mgmt",
+        "admin-state": "enable",
+        "ssh-server": "mgmt-netconf"
+      }
+    ],
+    "srl_nokia-system-name:name": {
+      "host-name": "NSRL-R2"
+    },
+    "srl_nokia-grpc:grpc-server": [
+      {
+        "name": "eda-discovery",
+        "admin-state": "enable",
+        "rate-limit": 65535,
+        "session-limit": 1024,
+        "metadata-authentication": true,
+        "default-tls-profile": true,
+        "network-instance": "mgmt",
+        "port": 50052,
+        "services": [
+          "srl_nokia-grpc:gnmi",
+          "srl_nokia-grpc:gnsi"
+        ]
+      },
+      {
+        "name": "eda-insecure-mgmt",
+        "admin-state": "enable",
+        "rate-limit": 65535,
+        "session-limit": 1024,
+        "metadata-authentication": true,
+        "port": 57411,
+        "services": [
+          "srl_nokia-grpc:gnmi",
+          "srl_nokia-grpc:gnoi",
+          "srl_nokia-grpc:gnsi"
+        ]
+      },
+      {
+        "name": "eda-mgmt",
+        "admin-state": "enable",
+        "rate-limit": 65535,
+        "session-limit": 1024,
+        "metadata-authentication": true,
+        "tls-profile": "EDA",
+        "network-instance": "mgmt",
+        "port": 57410,
+        "services": [
+          "srl_nokia-grpc:gnmi",
+          "srl_nokia-grpc:gnoi",
+          "srl_nokia-grpc:gnsi"
+        ]
+      },
+      {
+        "name": "insecure-mgmt",
+        "admin-state": "enable",
+        "rate-limit": 65000,
+        "network-instance": "mgmt",
+        "port": 57401,
+        "trace-options": [
+          "request",
+          "response",
+          "common"
+        ],
+        "services": [
+          "srl_nokia-grpc:gnmi",
+          "srl_nokia-grpc:gnoi",
+          "srl_nokia-grpc:gnsi",
+          "srl_nokia-grpc:gribi",
+          "srl_nokia-grpc:p4rt"
+        ],
+        "unix-socket": {
+          "admin-state": "enable"
+        }
+      },
+      {
+        "name": "mgmt",
+        "admin-state": "enable",
+        "rate-limit": 65000,
+        "tls-profile": "clab-profile",
+        "network-instance": "mgmt",
+        "trace-options": [
+          "request",
+          "response",
+          "common"
+        ],
+        "services": [
+          "srl_nokia-grpc:gnmi",
+          "srl_nokia-grpc:gnoi",
+          "srl_nokia-grpc:gnsi",
+          "srl_nokia-grpc:gribi",
+          "srl_nokia-grpc:p4rt"
+        ],
+        "unix-socket": {
+          "admin-state": "enable"
+        }
+      }
+    ],
+    "srl_nokia-json-rpc:json-rpc-server": {
+      "admin-state": "enable",
+      "network-instance": [
+        {
+          "name": "mgmt",
+          "http": {
+            "admin-state": "enable"
+          },
+          "https": {
+            "admin-state": "enable",
+            "tls-profile": "clab-profile"
+          }
+        }
+      ]
+    },
+    "srl_nokia-aaa:aaa": {
+      "authentication": {
+        "idle-timeout": 7200,
+        "authentication-method": [
+          "local"
+        ],
+        "linuxadmin-user": {
+          "password": "$y$j9T$stzvOCbF8uAyS3ERP.QBq0$/PwHooL52TgjkOqLTO7FfxepNgmv/ZnGhvfYXznZZF5"
+        }
+      },
+      "server-group": [
+        {
+          "name": "local",
+          "type": "srl_nokia-aaa-types:local"
+        }
+      ]
+    },
+    "srl_nokia-dns:dns": {
+      "network-instance": "mgmt",
+      "server-list": [
+        "10.255.255.254"
+      ]
+    },
+    "srl_nokia-system-snmp:snmp": {
+      "access-group": [
+        {
+          "name": "SNMPv2-RO-Community",
+          "security-level": "no-auth-no-priv",
+          "community-entry": [
+            {
+              "name": "RO-Community",
+              "community": "$aes1$AWDdNofHiaxQ2m8=$VB/aED4mLQ6jFQ6p/dHAgg=="
+            }
+          ]
+        }
+      ],
+      "network-instance": [
+        {
+          "name": "mgmt",
+          "admin-state": "enable"
+        }
+      ]
+    },
+    "srl_nokia-ssh:ssh-server": [
+      {
+        "name": "mgmt",
+        "admin-state": "enable",
+        "network-instance": "mgmt",
+        "use-credentialz": true
+      },
+      {
+        "name": "mgmt-netconf",
+        "admin-state": "enable",
+        "network-instance": "mgmt",
+        "port": 830,
+        "disable-shell": true
+      }
+    ],
+    "srl_nokia-system-banner:banner": {
+      "login-banner": "................................................................\n:                  Welcome to Nokia SR Linux!                  :\n:              Open Network OS for the NetOps era.             :\n:                                                              :\n:    This is a freely distributed official container image.    :\n:                      Use it - Share it                       :\n:                                                              :\n: Get started: https://learn.srlinux.dev                       :\n: Container:   https://go.srlinux.dev/container-image          :\n: Docs:        https://doc.srlinux.dev/24-10                   :\n: Rel. notes:  https://doc.srlinux.dev/rn24-10-6               :\n: YANG:        https://yang.srlinux.dev/v24.10.6               :\n: Discord:     https://go.srlinux.dev/discord                  :\n: Contact:     https://go.srlinux.dev/contact-sales            :\n................................................................\n"
+    },
+    "srl_nokia-tls:tls": {
+      "server-profile": [
+        {
+          "name": "clab-profile",
+          "key": "$aes1$ATT/uHAaeFxpJW8=$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",
+          "certificate": "-----BEGIN CERTIFICATE-----\nMIID1DCCArygAwIBAgICBnowDQYJKoZIhvcNAQELBQAwUzELMAkGA1UEBhMCVVMx\nCTAHBgNVBAcTADEVMBMGA1UEChMMY29udGFpbmVybGFiMQkwBwYDVQQLEwAxFzAV\nBgNVBAMTDnNybC1zcmwgbGFiIENBMB4XDTI2MDQxNzE3MTk1MFoXDTI3MDQxNzE3\nMTk1MFowVDELMAkGA1UEBhMCVVMxCTAHBgNVBAcTADEVMBMGA1UEChMMY29udGFp\nbmVybGFiMQkwBwYDVQQLEwAxGDAWBgNVBAMTD3NybDIuc3JsLXNybC5pbzCCASIw\nDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANYP4071E08odr8H9+bcMrqlivXu\nD4KUA+htl0Yckt3l2T7Be4yzBJxpsueiBbM98ewpr/wR1xGwmxIOOuT7YOUAUbVd\nvQ+/Bba1l2fK3F5Vz1qepPcMu+opXHeFCUQLiLrGXaQy6gbHhcuxVsYpRvl6DmpT\nv+4LBy0XWRhr3HrDfFjFWPW0o15Aqn6KruxtI6RF6kThXfShiOD+3VHya+ZwSrEF\nB87jaKUQZKD2uWBpN1DE2plF+bpSUJ0nNcceG/TQxD/VuJqqcTapr5wJe2FOVqIx\n5rQ0hwypA87Hlpt2TtKtKq400CF5qCa7t1axc6WpbMCwtEeM4mF/BBUOdkUCAwEA\nAaOBsDCBrTAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsG\nAQUFBwMBMA4GA1UdDgQHBAUBAgMEBjAfBgNVHSMEGDAWgBTe+fcfg5jcdNgM46lC\nY+NogowxHzBLBgNVHREERDBCggRzcmwyghFjbGFiLXNybC1zcmwtc3JsMoIPc3Js\nMi5zcmwtc3JsLmlvhwSsFBQDhxA//wFyACAAIAAAAAAAAAADMA0GCSqGSIb3DQEB\nCwUAA4IBAQCrDD9QT0VXi9QppyvJtNwDI5lXvODnwm8ZA4+VXkFVJ9+31HYSjX6W\njJUVKAl06KCjeswp7jrmVjdOR5EatUg9rSEPJ248/zVdkMFgrox96fGsk8S20QFD\nyRWBMD/KGT5qFtmXk8M3xleLQAtdLOjT6OMGoqUQ+T9OZpTGFSfBdQ/Ytv4812nw\nIbdD6hezqAcaUisch6PBVJqzbpnrbLw0DEbI9BGZQS9I0LhQYiLlNDiHNlZZrq2e\niSRU1553nCK0TZKWMj83d2MO30YrwEsd6SEtR1FC3YEh+UdbqiSDLxXy4R2yZt5a\naLglf1075z4HUoFqeKDoDuNo5m3I3zHn\n-----END CERTIFICATE-----\n",
+          "authenticate-client": false
+        }
+      ]
+    },
+    "srl_nokia-lldp:lldp": {
+      "admin-state": "enable"
     }
   },
+  "srl_nokia-interfaces:interface": [
+    {
+      "name": "ethernet-1/1",
+      "admin-state": "enable",
+      "subinterface": [
+        {
+          "index": 1,
+          "admin-state": "enable",
+          "ipv4": {
+            "admin-state": "enable",
+            "address": [
+              {
+                "ip-prefix": "192.168.1.2/30"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "mgmt0",
+      "admin-state": "enable",
+      "subinterface": [
+        {
+          "index": 0,
+          "admin-state": "enable",
+          "ipv4": {
+            "admin-state": "enable",
+            "srl_nokia-interfaces-ip-dhcp:dhcp-client": {
+              
+            }
+          },
+          "ipv6": {
+            "admin-state": "enable",
+            "srl_nokia-interfaces-ip-dhcp:dhcp-client": {
+              
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "srl_nokia-network-instance:network-instance": [
+    {
+      "name": "default",
+      "description": "Default network instance",
+      "interface": [
+        {
+          "name": "ethernet-1/1.1"
+        }
+      ],
+      "protocols": {
+        "srl_nokia-bgp:bgp": {
+          "admin-state": "enable",
+          "autonomous-system": 65002,
+          "router-id": "192.168.1.2",
+          "afi-safi": [
+            {
+              "afi-safi-name": "srl_nokia-common:ipv4-unicast",
+              "admin-state": "enable"
+            }
+          ],
+          "group": [
+            {
+              "group-name": "ebgp-peers",
+              "afi-safi": [
+                {
+                  "afi-safi-name": "srl_nokia-common:ipv4-unicast",
+                  "admin-state": "enable"
+                }
+              ]
+            }
+          ],
+          "neighbor": [
+            {
+              "peer-address": "192.168.1.1",
+              "description": "eBGP with AS65001",
+              "peer-as": 65001,
+              "peer-group": "ebgp-peers",
+              "local-as": {
+                "as-number": 65002
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "mgmt",
+      "type": "srl_nokia-network-instance:ip-vrf",
+      "admin-state": "enable",
+      "description": "Management network instance",
+      "interface": [
+        {
+          "name": "mgmt0.0"
+        }
+      ],
+      "protocols": {
+        "srl_nokia-linux:linux": {
+          "import-routes": true,
+          "export-routes": true,
+          "export-neighbors": true
+        }
+      }
+    }
+  ],
   "srl_nokia-acl:acl": {
     "acl-filter": [
       {
@@ -3561,111 +3667,5 @@
         }
       ]
     }
-  },
-  "srl_nokia-network-instance:network-instance": [
-    {
-      "name": "default",
-      "description": "Default network instance",
-      "interface": [
-        {
-          "name": "ethernet-1/1.1"
-        }
-      ],
-      "protocols": {
-        "srl_nokia-bgp:bgp": {
-          "admin-state": "enable",
-          "autonomous-system": 65002,
-          "router-id": "192.168.1.2",
-          "afi-safi": [
-            {
-              "afi-safi-name": "srl_nokia-common:ipv4-unicast",
-              "admin-state": "enable"
-            }
-          ],
-          "group": [
-            {
-              "group-name": "ebgp-peers",
-              "afi-safi": [
-                {
-                  "afi-safi-name": "srl_nokia-common:ipv4-unicast",
-                  "admin-state": "enable"
-                }
-              ]
-            }
-          ],
-          "neighbor": [
-            {
-              "peer-address": "192.168.1.1",
-              "description": "eBGP with AS65001",
-              "peer-as": 65001,
-              "peer-group": "ebgp-peers",
-              "local-as": {
-                "as-number": 65002
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "mgmt",
-      "type": "srl_nokia-network-instance:ip-vrf",
-      "admin-state": "enable",
-      "description": "Management network instance",
-      "interface": [
-        {
-          "name": "mgmt0.0"
-        }
-      ],
-      "protocols": {
-        "srl_nokia-linux:linux": {
-          "import-routes": true,
-          "export-routes": true,
-          "export-neighbors": true
-        }
-      }
-    }
-  ],
-  "srl_nokia-interfaces:interface": [
-    {
-      "name": "ethernet-1/1",
-      "admin-state": "enable",
-      "subinterface": [
-        {
-          "index": 1,
-          "admin-state": "enable",
-          "ipv4": {
-            "admin-state": "enable",
-            "address": [
-              {
-                "ip-prefix": "192.168.1.2/30"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "mgmt0",
-      "admin-state": "enable",
-      "subinterface": [
-        {
-          "index": 0,
-          "admin-state": "enable",
-          "ipv4": {
-            "admin-state": "enable",
-            "srl_nokia-interfaces-ip-dhcp:dhcp-client": {
-              
-            }
-          },
-          "ipv6": {
-            "admin-state": "enable",
-            "srl_nokia-interfaces-ip-dhcp:dhcp-client": {
-              
-            }
-          }
-        }
-      ]
-    }
-  ]
+  }
 }

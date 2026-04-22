@@ -6,9 +6,11 @@ topology:
     srl1:
       kind: nokia_srlinux
       image: ghcr.io/nokia/srlinux:24.10
+      startup-config: ./devices-config/clab-srl-srl/srl1/config.json
     srl2:
       kind: nokia_srlinux
       image: ghcr.io/nokia/srlinux:24.10
+      startup-config: ./devices-config/clab-srl-srl/srl2/config.json
 
   links:
     - endpoints: ["srl1:ethernet-1/1", "srl2:ethernet-1/1"]

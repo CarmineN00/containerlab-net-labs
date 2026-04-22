@@ -1,9 +1,0 @@
-# Ignore all SRL containerlab generated configs
-clab-srl-srl/**/aaamgr_local_user.json
-clab-srl-srl/**/config.json
-clab-srl-srl/**/last_boot_reason.json
-clab-srl-srl/**/mgmt.boottime
-clab-srl-srl/**/*.key.pem
-clab-srl-srl/**/*.pem
-clab-srl-srl/**/topology.yml
-clab-srl-srl/topology-data.json
