@@ -1,4 +1,3 @@
-# containerlab-net-labs
-containerlab deploy -t topology_name --reconfigure
-containerlab save -t srl-srl.clab.yml --node-filter node_name --copy ./devices-config
-containerlab destroy --cleanup
+# BGP lab
+
+eBGP session between two directly connected nodes belonging to AS 65001 and 65002 respectively.
