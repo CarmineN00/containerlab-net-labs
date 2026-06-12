@@ -1,3 +1,5 @@
 # BGP lab
 
-eBGP session between two directly connected nodes belonging to AS 65001 and 65002 respectively.
+eBGP: R1-AS65001 - R1-AS65002
+
+iBGP: R1-AS65001 - R2-AS65001
