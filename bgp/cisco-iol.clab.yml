@@ -1,0 +1,21 @@
+name: my-iol-lab
+topology:
+  nodes:
+    iol-1:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.2
+      startup-config: ./devices-config/iol-1.cfg
+    iol-2:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.3
+      startup-config: ./devices-config/iol-2.cfg
+    iol-3:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      startup-config: ./devices-config/iol-3.cfg
+      mgmt-ipv4: 172.20.20.4
+  links:
+    - endpoints: ["iol-1:Ethernet0/1","iol-2:Ethernet0/1"]
+    - endpoints: ["iol-1:Ethernet0/2","iol-3:Ethernet0/1"]
