@@ -19,3 +19,4 @@ topology:
   links:
     - endpoints: ["iol-1:Ethernet0/1","iol-2:Ethernet0/1"]
     - endpoints: ["iol-1:Ethernet0/2","iol-3:Ethernet0/1"]
+    - endpoints: ["iol-2:Ethernet0/2","iol-3:Ethernet0/2"]
