@@ -1,0 +1,48 @@
+name: my-iol-lab
+topology:
+  nodes:
+    r1:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.10
+    r2:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.20
+    r3:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.30
+    r4:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.40
+    r5:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.50
+    r6:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.60
+    r7:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.70
+
+    ospf-br-area1:
+      kind: bridge
+
+  links:
+    # Area 0 - Backbone
+    - endpoints: ["r1:Ethernet0/2","r2:Ethernet0/1"]
+    - endpoints: ["r2:Ethernet0/2","r3:Ethernet0/1"]
+
+    # Area 2 - NSSA
+    - endpoints: ["r3:Ethernet0/2","r5:Ethernet0/1"]
+    - endpoints: ["r5:Ethernet0/2","r6:Ethernet0/1"]
+
+    # Area 1 - segmento multi-access (DR/BDR) su bridge condiviso
+    - endpoints: ["r1:Ethernet0/1","ospf-br-area1:r1-eth"]
+    - endpoints: ["r4:Ethernet0/1","ospf-br-area1:r4-eth"]
+    - endpoints: ["r7:Ethernet0/1","ospf-br-area1:r7-eth"]
