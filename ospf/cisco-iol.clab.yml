@@ -5,30 +5,37 @@ topology:
       kind: cisco_iol
       image: vrnetlab/cisco_iol:17.18.02
       mgmt-ipv4: 172.20.20.10
+      startup-config: configs/r1.cfg
     r2:
       kind: cisco_iol
       image: vrnetlab/cisco_iol:17.18.02
       mgmt-ipv4: 172.20.20.20
+      startup-config: configs/r2.cfg
     r3:
       kind: cisco_iol
       image: vrnetlab/cisco_iol:17.18.02
       mgmt-ipv4: 172.20.20.30
+      startup-config: configs/r3.cfg
     r4:
       kind: cisco_iol
       image: vrnetlab/cisco_iol:17.18.02
       mgmt-ipv4: 172.20.20.40
+      startup-config: configs/r4.cfg
     r5:
       kind: cisco_iol
       image: vrnetlab/cisco_iol:17.18.02
       mgmt-ipv4: 172.20.20.50
+      startup-config: configs/r5.cfg
     r6:
       kind: cisco_iol
       image: vrnetlab/cisco_iol:17.18.02
       mgmt-ipv4: 172.20.20.60
+      startup-config: configs/r6.cfg
     r7:
       kind: cisco_iol
       image: vrnetlab/cisco_iol:17.18.02
       mgmt-ipv4: 172.20.20.70
+      startup-config: configs/r7.cfg
 
     ospf-br-area1:
       kind: bridge
