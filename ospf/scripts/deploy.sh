@@ -10,4 +10,4 @@ else
   echo "[deploy.sh] Bridge $BRIDGE_NAME già presente, salto la creazione."
 fi
 
-containerlab deploy -t "cisco-iol.clab.yml"
+containerlab deploy -t "../cisco-iol.clab.yml"
