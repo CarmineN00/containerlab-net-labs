@@ -1,8 +1,10 @@
 import argparse
 import json
+import re
 import subprocess
 from pathlib import Path
 from netmiko import ConnectHandler
+
 
 def get_lab_nodes(topo_file):
     result = subprocess.run(
@@ -11,7 +13,6 @@ def get_lab_nodes(topo_file):
     )
     data = json.loads(result.stdout)
     containers = next((v for v in data.values() if isinstance(v, list)), [])
-
     nodes = []
     for c in containers:
         full_name = c["name"]
@@ -19,6 +20,7 @@ def get_lab_nodes(topo_file):
         mgmt_ip = c["ipv4_address"].split("/")[0]
         nodes.append({"name": short_name, "kind": c["kind"], "mgmt_ip": mgmt_ip})
     return nodes
+
 
 def export_config(mgmt_ip, username, password):
     device = {
@@ -31,6 +33,15 @@ def export_config(mgmt_ip, username, password):
         conn.send_command("terminal length 0")
         return conn.send_command("show running-config", read_timeout=30)
 
+
+def clean_config(config):
+    # Rimuove i blocchi crypto pki self-signed (certificato orfano
+    # se riusato in un nuovo container/NVRAM)
+    config = re.sub(r"crypto pki trustpoint TP-self-signed.*?\n!\n", "", config, flags=re.DOTALL)
+    config = re.sub(r"crypto pki certificate chain TP-self-signed.*?quit\n", "", config, flags=re.DOTALL)
+    return config
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--topo", required=True)
@@ -38,19 +49,18 @@ def main():
     parser.add_argument("--username", default="admin")
     parser.add_argument("--password", default="admin")
     args = parser.parse_args()
-
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
-
     nodes = get_lab_nodes(args.topo)
-
     for node in nodes:
         if node["kind"] != "cisco_iol":
             continue
         config = export_config(node["mgmt_ip"], args.username, args.password)
+        config = clean_config(config)
         out_file = outdir / f"{node['name']}.cfg"
         out_file.write_text(config + "\n")
         print(f"[{node['name']}] salvato in {out_file}")
+
 
 if __name__ == "__main__":
     main()
