@@ -40,7 +40,7 @@ topology:
       kind: cisco_iol
       image: vrnetlab/cisco_iol:17.18.02
       mgmt-ipv4: 172.20.20.80
-
+      startup-config: configs/r8.cfg
     ospf-br-area1:
       kind: bridge
 
