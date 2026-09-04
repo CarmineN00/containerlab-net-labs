@@ -41,6 +41,17 @@ topology:
       image: vrnetlab/cisco_iol:17.18.02
       mgmt-ipv4: 172.20.20.80
       startup-config: configs/r8.cfg
+    r9:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.90
+      startup-config: configs/r9.cfg
+    r10:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.18.02
+      mgmt-ipv4: 172.20.20.100
+      startup-config: configs/r10.cfg
+      
     ospf-br-area1:
       kind: bridge
 
@@ -53,10 +64,16 @@ topology:
     - endpoints: ["r3:Ethernet0/2","r5:Ethernet0/1"]
     - endpoints: ["r5:Ethernet0/2","r6:Ethernet0/1"]
 
-    # Area 1 - segmento multi-access (DR/BDR) su bridge condiviso
+    # Area 1 - multi-access segment (DR/BDR)
     - endpoints: ["r1:Ethernet0/1","ospf-br-area1:r1-eth"]
     - endpoints: ["r4:Ethernet0/1","ospf-br-area1:r4-eth"]
     - endpoints: ["r7:Ethernet0/1","ospf-br-area1:r7-eth"]
 
     # Area 3 - totally stubby
     - endpoints: ["r3:Ethernet0/3","r8:Ethernet0/1"]
+
+    # Area 4 - normal
+    - endpoints: ["r1:Ethernet0/3","r9:Ethernet0/1"]
+    
+    # Area 5 - discontiguous area
+    - endpoints: ["r9:Ethernet0/2","r10:Ethernet0/1"]
