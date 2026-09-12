@@ -35,3 +35,8 @@ Each lab directory typically contains:
 - `configs/` — per-node startup configs.
 - `scripts/` — helper scripts.
 - `images/` — screenshots showing the results/outcomes of what was done in the lab (e.g. `show` command output, verifying a configuration change), referenced in the lab's README.
+
+## Lab tools
+python3 lab_tools.py export-configs --topo topo_name.clab.yml
+
+python3 lab_tools.py open-sessions --topo topo_name.clab.yml
