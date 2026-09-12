@@ -6,15 +6,15 @@ topology:
     image: vrnetlab/cisco_iol:17.18.02
 
   nodes:
-    r1: { mgmt-ipv4: 172.20.20.10, startup-config }
-    r2: { mgmt-ipv4: 172.20.20.20, startup-config }
-    r3: { mgmt-ipv4: 172.20.20.30, startup-config }
-    r4: { mgmt-ipv4: 172.20.20.40, startup-config }        
-    r5: { mgmt-ipv4: 172.20.20.50, startup-config }
-    r6: { mgmt-ipv4: 172.20.20.60, startup-config }
-    r7: { mgmt-ipv4: 172.20.20.70, startup-config }
-    r8: { mgmt-ipv4: 172.20.20.80, startup-config }
-    r9: { mgmt-ipv4: 172.20.20.90, startup-config }
+    r1: { mgmt-ipv4: 172.20.20.10, startup-config: configs/r1.cfg }
+    r2: { mgmt-ipv4: 172.20.20.20, startup-config: configs/r2.cfg }
+    r3: { mgmt-ipv4: 172.20.20.30, startup-config: configs/r3.cfg }
+    r4: { mgmt-ipv4: 172.20.20.40, startup-config: configs/r4.cfg }        
+    r5: { mgmt-ipv4: 172.20.20.50, startup-config: configs/r5.cfg }
+    r6: { mgmt-ipv4: 172.20.20.60, startup-config: configs/r6.cfg }
+    r7: { mgmt-ipv4: 172.20.20.70, startup-config: configs/r7.cfg }
+    r8: { mgmt-ipv4: 172.20.20.80, startup-config: configs/r8.cfg }
+    r9: { mgmt-ipv4: 172.20.20.90, startup-config: configs/r9.cfg }
 
     eigrp_br-ma1:
         kind: bridge
