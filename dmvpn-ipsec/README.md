@@ -1,132 +1,105 @@
-# DMVPN Phase 1 Lab
+# DMVPN Tunnel Protection (IPsec) Lab
 
 ## Credits
 
-This lab is based on "LAB01 - DMVPN" from the ENARSI Hands-On v1.0 course material
+This lab is based on "LAB03 - DMVPN tunnel protection" from the ENARSI Hands-On v1.0 course material
 by [Magnetico Associazione Culturale](https://www.magnetico.cloud/).
 
 ## Topology
 
-A [containerlab](https://containerlab.dev/) topology with 4 Cisco IOL routers building a **DMVPN Phase 1** hub-and-spoke overlay: one hub (R1) with a multipoint GRE tunnel acting as NHRP server, and three spokes (R2–R4) with classic point-to-point GRE tunnels pointed at the hub. EIGRP (AS 90) runs over the overlay to exchange the LAN prefixes (simulated by loopbacks), with the spokes configured as stubs. The lab is used to practice NHRP registration, the hub vs. spoke view of the DMVPN cloud, EIGRP split-horizon over an mGRE interface, and the Phase 1 behaviour where all spoke-to-spoke traffic goes through the hub.
+A [containerlab](https://containerlab.dev/) topology with 4 Cisco IOL routers that starts from the final state of the [DMVPN Phase 2 and Phase 3 lab](../dmvpn-p2-p3/): same hub (R1), same three mGRE spokes (R2–R4), EIGRP AS 90 and NHRP redirect/shortcut (Phase 3). Up to now the overlay was plain GRE, so everything crossing the NBMA network travelled in clear text. This lab adds two things to the tunnels:
 
-![DMVPN Phase 1 lab topology](images/dmvpn_lab_topology.png)
+- **MTU / MSS tuning** on the overlay, to leave room for the GRE and IPsec headers.
+- **IPsec tunnel protection**, so that every GRE packet between two DMVPN routers is encrypted, both on the hub-spoke tunnels and on the on-demand spoke-to-spoke ones.
 
-- **Underlay (NBMA)**: all four routers share a single segment, 10.1.234.0/24, through a containerlab bridge (`br-nbma`). It plays the role of the transport network (e.g. the Internet or an MPLS cloud): the tunnel endpoints (NBMA addresses) live here.
-- **Overlay (DMVPN)**: the tunnel network 192.168.234.0/24. R1 is the hub and Next Hop Server (NHS); R2, R3 and R4 are spokes.
-- **Routing**: EIGRP AS 90 runs only on the tunnel and loopback interfaces. Loopback0 on each router stands in for the site LAN (192.168.X.0/24).
+![DMVPN lab topology](images/dmvpn_lab_topology.png)
+
+- **Underlay (NBMA)**: all four routers share a single segment, 10.1.234.0/24, through a containerlab bridge (`br-nbma`). The tunnel endpoints (NBMA addresses) and the IPsec peers live here.
+- **Overlay (DMVPN)**: the tunnel network 192.168.234.0/24, mGRE on every router. R1 is the hub and Next Hop Server (NHS).
+- **Routing**: EIGRP AS 90 on the tunnel and loopback interfaces. The hub advertises the summary 192.168.0.0/21, and the spokes build shortcuts to each other through NHRP.
+- **Security**: IKEv1 with pre-shared key and an IPsec profile applied to Tunnel0 on every router.
 
 | Config file | Hostname | Role | Et0/1 (NBMA) | Tunnel0 | Loopback0 | Mgmt IP |
 |---|---|---|---|---|---|---|
-| `configs/r1.cfg` | R1 | Hub / NHS | 10.1.234.1/24 | 192.168.234.1/24 (mGRE) | 192.168.1.1/24 | 172.20.20.10 |
-| `configs/r2.cfg` | R2 | Spoke | 10.1.234.2/24 | 192.168.234.2/24 (GRE p2p) | 192.168.2.1/24 | 172.20.20.20 |
-| `configs/r3.cfg` | R3 | Spoke | 10.1.234.3/24 | 192.168.234.3/24 (GRE p2p) | 192.168.3.1/24 | 172.20.20.30 |
-| `configs/r4.cfg` | R4 | Spoke | 10.1.234.4/24 | 192.168.234.4/24 (GRE p2p) | 192.168.4.1/24 | 172.20.20.40 |
+| `configs/r1.cfg` | R1 | Hub / NHS | 10.1.234.1/24 | 192.168.234.1/24 (mGRE + IPsec) | 192.168.1.1/24 | 172.20.20.10 |
+| `configs/r2.cfg` | R2 | Spoke | 10.1.234.2/24 | 192.168.234.2/24 (mGRE + IPsec) | 192.168.2.1/24 | 172.20.20.20 |
+| `configs/r3.cfg` | R3 | Spoke | 10.1.234.3/24 | 192.168.234.3/24 (mGRE + IPsec) | 192.168.3.1/24 | 172.20.20.30 |
+| `configs/r4.cfg` | R4 | Spoke | 10.1.234.4/24 | 192.168.234.4/24 (mGRE + IPsec) | 192.168.4.1/24 | 172.20.20.40 |
 
-containerlab's `ethN` maps to IOL's `Ethernet0/N`; `Ethernet0/0` is always the management interface (in the `clab-mgmt` VRF).
+containerlab's `ethN` maps to IOL's `Ethernet0/N`. `Ethernet0/0` is always the management interface (in the `clab-mgmt` VRF).
 
-## Hub configuration — multipoint GRE
+## MTU and MSS on the overlay
 
-The hub has a single tunnel interface that terminates every spoke. There's no `tunnel destination`: with `tunnel mode gre multipoint` the destination of each GRE packet is looked up in the NHRP table, which the hub fills dynamically as the spokes register. All routers in the cloud must agree on the NHRP `network-id`, the NHRP authentication string and the `tunnel key`:
+Every packet that enters Tunnel0 gets wrapped in more headers before it reaches the NBMA network: 24 bytes of GRE (new IP header plus GRE header with the tunnel key), and on top of that the ESP header, IV, padding and authentication trailer added by IPsec. A 1500-byte packet from the LAN would no longer fit in the 1500-byte underlay and would have to be fragmented after encryption, which is expensive and often breaks applications.
+
+The usual fix is to lower the IP MTU of the tunnel to 1400 bytes, leaving plenty of room for the overhead, and to clamp the TCP MSS to 1360 bytes (1400 minus 20 bytes of IP and 20 of TCP header). The MSS clamp rewrites the SYN packets crossing the tunnel, so TCP sessions agree from the start on segments that fit and never rely on fragmentation or Path MTU Discovery:
 
 ```
-! R1
+! R1, R2, R3, R4
 interface Tunnel0
- ip address 192.168.234.1 255.255.255.0
- no ip redirects
- no ip split-horizon eigrp 90
- ip nhrp authentication enarsi
- ip nhrp network-id 100
- ip nhrp holdtime 15
- tunnel source Ethernet0/1
- tunnel mode gre multipoint
- tunnel key 100
+ ip mtu 1400
+ ip tcp adjust-mss 1360
 ```
 
-`show interfaces Tunnel0` confirms the transport is `multi-GRE/IP`, sourced from the NBMA address 10.1.234.1:
+On R2, `show ip interface Tunnel0` reports `MTU is 1400 bytes` and `TCP Adjust MSS` among the input and output features. A ping toward R3's LAN with the DF bit set shows where the limit is: 1400-byte packets go through, while 1401-byte packets can't be sent through the tunnel without fragmentation, so they fail:
 
-![R1 Tunnel0 configuration and multi-GRE/IP transport](images/hub_tunnel_config.png)
+![R2: Tunnel0 MTU 1400 and MSS adjust, DF ping succeeding at 1400 bytes and failing at 1401](images/spoke_tunnel_mtu.png)
 
-(`no ip split-horizon eigrp 90` is explained in [EIGRP over the hub-and-spoke overlay](#eigrp-over-the-hub-and-spoke-overlay) below.)
+## The IPsec profile
 
-## Spoke configuration — point-to-point GRE
-
-What makes this **Phase 1** is the spokes: each one uses a regular point-to-point GRE tunnel with a static `tunnel destination` set to the hub's NBMA address, so a spoke can only ever send traffic into the hub. `ip nhrp nhs` points at the hub's tunnel address, so the spoke registers its tunnel-to-NBMA mapping with it:
+The protection is defined in three blocks, identical on every router:
 
 ```
-! R2 (R3 and R4 are identical apart from the addresses)
-interface Tunnel0
- ip address 192.168.234.2 255.255.255.0
- ip nhrp authentication enarsi
- ip nhrp network-id 100
- ip nhrp holdtime 15
- ip nhrp nhs 192.168.234.1
- tunnel source Ethernet0/1
- tunnel destination 10.1.234.1
- tunnel key 100
-```
-
-The transport here is plain `GRE/IP`, with a fixed destination of 10.1.234.1:
-
-![R2 Tunnel0 configuration and GRE/IP point-to-point transport](images/spoke_tunnel_config.png)
-
-## NHRP registration
-
-Each spoke sends an NHRP Registration Request to the NHS telling it "tunnel address 192.168.234.X is reachable at NBMA address 10.1.234.X". With `ip nhrp holdtime 15`, the registrations are valid for 15 seconds and the spokes refresh them periodically (by default every holdtime/3, so every 5 seconds). A spoke that stops registering ages out of the hub's table quickly.
-
-On the hub, `show dmvpn` reports `Type:Hub` with 3 NHRP peers, all **dynamic** (`D`): none of them is configured on R1, they were all learned from the registrations. `show ip nhrp` shows the same entries with the `registered` flag and the `expire` timer that keeps going back to ~15 seconds:
-
-![R1 show dmvpn (3 dynamic peers) and show ip nhrp (registered entries)](images/hub_dmvpn_nhrp.png)
-
-The same registrations also create the **multicast mappings** on the hub (`show ip nhrp multicast` lists 10.1.234.2/.3/.4 as `dynamic`). That's what lets the EIGRP hellos (multicast to 224.0.0.10) get replicated as unicast GRE packets to every registered spoke. There's no need for `ip nhrp map multicast dynamic`, because IOS-XE adds these entries automatically when a spoke registers.
-
-On a spoke, `show dmvpn` is empty: a point-to-point GRE tunnel doesn't need NHRP to resolve the destination, so there are no NHRP peer entries to show. The relationship with the hub is visible with `show ip nhrp nhs detail` instead: 192.168.234.1 is in state **RE** (Expecting replies / Responding), and the request/reply counters keep increasing with every registration refresh:
-
-![R2: empty show dmvpn, and NHS 192.168.234.1 in state RE](images/spoke_nhrp_registration.png)
-
-## EIGRP over the hub-and-spoke overlay
-
-EIGRP is enabled on the tunnel and on the loopback of every router (classic mode, AS 90). The spokes are configured as **stubs** (`eigrp stub connected`): they advertise only their connected LAN and are never queried by the hub. That's the right choice for branch routers that should never be used as transit.
-
-```
-! R1
-router eigrp 90
- network 192.168.1.1 0.0.0.0
- network 192.168.234.1 0.0.0.0
+! R1, R2, R3, R4
+crypto isakmp policy 10
+ encryption aes
+ hash sha
+ authentication pre-share
+ group 14
+crypto isakmp key ccnp1234 address 0.0.0.0
 !
-! R2 (R3 and R4 the same, with their own addresses)
-router eigrp 90
- network 192.168.2.1 0.0.0.0
- network 192.168.234.2 0.0.0.0
- eigrp stub connected
+crypto ipsec transform-set VPN-TS esp-aes esp-sha-hmac
+ mode transport
+!
+crypto ipsec profile VPN_PROFILE
+ set transform-set VPN-TS
 ```
 
-The hub forms 3 adjacencies, all on Tu0, and learns each spoke's LAN directly from that spoke (`show ip eigrp neighbors detail` also reports each of them as `Stub Peer Advertising (CONNECTED) Routes`):
+- **ISAKMP (IKE phase 1)**: AES encryption, SHA hash and authentication with the pre-shared key `ccnp1234`. The key is bound to `address 0.0.0.0`, a wildcard: in a DMVPN the spokes can build SAs with each other on demand, so every router must be ready to authenticate any peer on the NBMA network, not just a fixed list. The exercise asks for **DH group 5**, but IOS-XE 17.18 deprecates it, so the lab uses **group 14** (2048-bit) instead.
+- **Transform set (IKE phase 2)**: ESP with AES and SHA-HMAC, in **transport mode**. GRE already provides a new outer IP header between the two NBMA addresses, so there's no point in letting IPsec add yet another one (tunnel mode). In transport mode ESP is inserted between the GRE packet's IP header and the GRE header, which saves 20 bytes per packet.
+- **IPsec profile**: instead of a crypto map with static peers and ACLs, the profile only lists the transform set. Peers and traffic are derived from the tunnel interface it's attached to.
 
-![R1: three EIGRP neighbors on Tu0 and the three spoke LANs](images/hub_eigrp_neighbors_routes.png)
+![R1: ISAKMP policy, wildcard pre-shared key, transform set VPN-TS in transport mode and profile VPN_PROFILE](images/crypto_config.png)
 
-A spoke only peers with the hub, since that's the only endpoint its p2p tunnel can reach. Spokes never form adjacencies with each other. Still, R2 learns the LANs of R3 and R4 too, all with the hub (192.168.234.1) as next hop and a higher metric than the hub's own LAN, because they are one extra hop away:
+## Tunnel protection on Tunnel0
 
-![R2: a single EIGRP neighbor (the hub) and all remote LANs via 192.168.234.1](images/spoke_eigrp_routes.png)
-
-### Why split-horizon must be disabled on the hub
-
-For the hub, all spokes sit behind the **same interface**, Tunnel0. Split-horizon forbids advertising a route out of the interface it was learned on, so by default R1 would learn 192.168.3.0/24 from R3 on Tu0 and then refuse to advertise it back out of Tu0 to R2 and R4. Temporarily re-enabling it on the hub proves it: once the adjacencies come back up, R2 only knows the hub's own LAN, 192.168.1.0/24, and the other spokes have disappeared:
+The profile is applied with a single line on the tunnel interface:
 
 ```
-! R1
+! R1, R2, R3, R4
 interface Tunnel0
- ip split-horizon eigrp 90
+ tunnel protection ipsec profile VPN_PROFILE
 ```
 
-![R2 routing table with split-horizon enabled on the hub: only 192.168.1.0/24](images/spoke_routes_with_split-horizon_on_hub.png)
+From now on the router encrypts every GRE packet that leaves Tunnel0 and expects every GRE packet arriving on it to be encrypted. The peer for each SA is the NBMA address that NHRP has resolved for the destination, so IPsec automatically follows the DMVPN: hub-spoke SAs for the registrations and the EIGRP traffic, spoke-to-spoke SAs when a shortcut is built. `show interfaces Tunnel0` now shows `Tunnel protection via IPSec (profile "VPN_PROFILE")` next to the `multi-GRE/IP` transport:
 
-That's why the hub keeps `no ip split-horizon eigrp 90` on Tunnel0. With it removed again, R2 relearns 192.168.3.0/24 and 192.168.4.0/24, as in the previous screenshot.
+![R1: Tunnel0 running config with ip mtu, adjust-mss and tunnel protection, and show interfaces confirming IPsec protection](images/hub_tunnel_protection.png)
 
-## Spoke-to-spoke traffic in Phase 1
+## Hub-spoke SAs
 
-In Phase 1, the spokes have no way to build a direct tunnel to each other. Their GRE tunnel has a fixed destination (the hub), and the routes to the other spokes point at the hub anyway. A traceroute from R2's LAN to R3's LAN shows the two hops: first the hub (192.168.234.1), then R3 (192.168.234.3). Every packet between two branches has to go through the hub, entering and leaving on the same Tunnel0, which is exactly the limitation that Phase 2 (spoke-to-spoke tunnels with mGRE on the spokes) and Phase 3 (NHRP redirect/shortcut) address:
+As soon as the spokes register with the hub, each of them negotiates an SA with R1. On the hub, `show crypto isakmp sa` lists three IKE SAs, one per spoke, all in `QM_IDLE`: phase 1 is complete and quick mode (phase 2) has produced the IPsec SAs. `show crypto session` shows the same three peers as `UP-ACTIVE` on Tunnel0. The protected flow is `permit 47 host 10.1.234.1 host 10.1.234.X`, meaning IP protocol 47 (GRE) between the hub's and the spoke's NBMA addresses: IPsec encrypts the GRE packets, and with them everything carried inside (NHRP, EIGRP, user traffic). `Active SAs: 2` is one inbound and one outbound IPsec SA per peer. The `origin: crypto map` label comes from the fact that, internally, tunnel protection builds a dynamic crypto map from the profile:
 
-![Traceroute from R2 to R3's LAN going through the hub](images/spoke-to-spoke_via_hub.png)
+![R1: three ISAKMP SAs in QM_IDLE and three UP-ACTIVE crypto sessions protecting GRE](images/hub_crypto_sessions.png)
+
+## Spoke-to-spoke SAs on demand
+
+The spoke-to-spoke tunnels of Phase 3 are protected too, and their SAs are created only when needed. Before any traffic between R2 and R3, R2 has a single IKE SA, with the hub. A ping from R2's LAN to R3's LAN first goes through the hub, which sends the NHRP redirect. R2 resolves R3's NBMA address with a shortcut, and before it can send GRE packets directly to 10.1.234.3 it negotiates an SA with R3.
+
+Right after the ping, R2 has two new IKE SAs with R3 in `QM_IDLE`, one for each direction (10.1.234.3 → 10.1.234.2 and 10.1.234.2 → 10.1.234.3), because both spokes started the negotiation at the same time. `show dmvpn` shows the dynamic entries for R3 (`DT1`, the shortcut route installed), and the traceroute reaches 192.168.3.1 in a single hop, directly over the protected spoke-to-spoke tunnel:
+
+![R2: only the hub SA before traffic, then SAs with R3 after the ping, DT1 entries and a one-hop traceroute](images/spoke-to-spoke_dynamic_sa.png)
+
+As in the previous lab, the NHRP shortcut for 192.168.3.0/24 ages out quickly without traffic (`ip nhrp holdtime 15`), so the next flow goes through the hub again and triggers a new redirect. The IKE/IPsec SAs with R3, on the other hand, stay up until their lifetime expires or they are cleared (`clear crypto session remote 10.1.234.3`), so the new shortcut can reuse them without another negotiation.
 
 ## Running the lab
 
@@ -134,7 +107,7 @@ In Phase 1, the spokes have no way to build a direct tunnel to each other. Their
 # create the NBMA bridge if missing (it's a host bridge, so it must exist before deploy)
 ./scripts/create_bridge.sh br-nbma
 
-# deploy / destroy (from the dmvpn-p1 directory)
+# deploy / destroy (from the dmvpn-ipsec directory)
 clab deploy
 clab destroy --cleanup
 ```
