@@ -1,38 +1,72 @@
-# DMVPN Phase 1 Lab
+# DMVPN Phase 2 and Phase 3 Lab
 
 ## Credits
 
-This lab is based on "LAB01 - DMVPN" from the ENARSI Hands-On v1.0 course material
+This lab is based on "LAB02 - DMVPN fase 2 e 3" from the ENARSI Hands-On v1.0 course material
 by [Magnetico Associazione Culturale](https://www.magnetico.cloud/).
 
 ## Topology
 
-A [containerlab](https://containerlab.dev/) topology with 4 Cisco IOL routers building a **DMVPN Phase 1** hub-and-spoke overlay: one hub (R1) with a multipoint GRE tunnel acting as NHRP server, and three spokes (R2–R4) with classic point-to-point GRE tunnels pointed at the hub. EIGRP (AS 90) runs over the overlay to exchange the LAN prefixes (simulated by loopbacks), with the spokes configured as stubs. The lab is used to practice NHRP registration, the hub vs. spoke view of the DMVPN cloud, EIGRP split-horizon over an mGRE interface, and the Phase 1 behaviour where all spoke-to-spoke traffic goes through the hub.
+A [containerlab](https://containerlab.dev/) topology with 4 Cisco IOL routers that picks up where the [DMVPN Phase 1 lab](../dmvpn-p1/) left off: same hub (R1), same three spokes (R2–R4), same underlay and EIGRP AS 90. This time the spokes get **multipoint GRE** tunnels too, so they can build tunnels directly to each other on demand. The lab goes through two steps:
 
-![DMVPN Phase 1 lab topology](images/dmvpn_lab_topology.png)
+- **Phase 2**: spoke-to-spoke tunnels driven by the routing table. The hub must advertise every spoke LAN with the *original* spoke as next hop, so EIGRP on the hub needs both split-horizon and next-hop-self disabled.
+- **Phase 3**: spoke-to-spoke tunnels driven by NHRP. The hub only advertises a summary and sends **NHRP redirects**; the spokes answer with **NHRP shortcuts** that install more specific routes on their own.
 
-- **Underlay (NBMA)**: all four routers share a single segment, 10.1.234.0/24, through a containerlab bridge (`br-nbma`). It plays the role of the transport network (e.g. the Internet or an MPLS cloud): the tunnel endpoints (NBMA addresses) live here.
-- **Overlay (DMVPN)**: the tunnel network 192.168.234.0/24. R1 is the hub and Next Hop Server (NHS); R2, R3 and R4 are spokes.
-- **Routing**: EIGRP AS 90 runs only on the tunnel and loopback interfaces. Loopback0 on each router stands in for the site LAN (192.168.X.0/24).
+![DMVPN Phase 2/3 lab topology](images/dmvpn_lab_topology.png)
+
+- **Underlay (NBMA)**: all four routers share a single segment, 10.1.234.0/24, through a containerlab bridge (`br-nbma`). The tunnel endpoints (NBMA addresses) live here.
+- **Overlay (DMVPN)**: the tunnel network 192.168.234.0/24. R1 is the hub and Next Hop Server (NHS). R2, R3 and R4 are spokes, all with mGRE tunnels.
+- **Routing**: EIGRP AS 90 on the tunnel and loopback interfaces. Loopback0 on each router stands in for the site LAN (192.168.X.0/24), and the spokes are `eigrp stub connected`.
 
 | Config file | Hostname | Role | Et0/1 (NBMA) | Tunnel0 | Loopback0 | Mgmt IP |
 |---|---|---|---|---|---|---|
 | `configs/r1.cfg` | R1 | Hub / NHS | 10.1.234.1/24 | 192.168.234.1/24 (mGRE) | 192.168.1.1/24 | 172.20.20.10 |
-| `configs/r2.cfg` | R2 | Spoke | 10.1.234.2/24 | 192.168.234.2/24 (GRE p2p) | 192.168.2.1/24 | 172.20.20.20 |
-| `configs/r3.cfg` | R3 | Spoke | 10.1.234.3/24 | 192.168.234.3/24 (GRE p2p) | 192.168.3.1/24 | 172.20.20.30 |
-| `configs/r4.cfg` | R4 | Spoke | 10.1.234.4/24 | 192.168.234.4/24 (GRE p2p) | 192.168.4.1/24 | 172.20.20.40 |
+| `configs/r2.cfg` | R2 | Spoke | 10.1.234.2/24 | 192.168.234.2/24 (mGRE) | 192.168.2.1/24 | 172.20.20.20 |
+| `configs/r3.cfg` | R3 | Spoke | 10.1.234.3/24 | 192.168.234.3/24 (mGRE) | 192.168.3.1/24 | 172.20.20.30 |
+| `configs/r4.cfg` | R4 | Spoke | 10.1.234.4/24 | 192.168.234.4/24 (mGRE) | 192.168.4.1/24 | 172.20.20.40 |
 
-containerlab's `ethN` maps to IOL's `Ethernet0/N`; `Ethernet0/0` is always the management interface (in the `clab-mgmt` VRF).
+The files in `configs/` hold the **final (Phase 3)** configuration. The Phase 2 state is in commit `aff2293` ("config phase2"). containerlab's `ethN` maps to IOL's `Ethernet0/N`. `Ethernet0/0` is always the management interface (in the `clab-mgmt` VRF).
 
-## Hub configuration — multipoint GRE
+## Phase 2 — spoke-to-spoke tunnels
 
-The hub has a single tunnel interface that terminates every spoke. There's no `tunnel destination`: with `tunnel mode gre multipoint` the destination of each GRE packet is looked up in the NHRP table, which the hub fills dynamically as the spokes register. All routers in the cloud must agree on the NHRP `network-id`, the NHRP authentication string and the `tunnel key`:
+### Spokes: from p2p GRE to mGRE
+
+In Phase 1, the spokes had a fixed `tunnel destination` pointing at the hub, so they couldn't send a GRE packet anywhere else. In Phase 2, that line is replaced by `tunnel mode gre multipoint`. The GRE destination of each packet is now looked up in the NHRP table, exactly as on the hub.
+
+Without a fixed destination, the spoke no longer knows the hub's NBMA address implicitly, so the NHS statement now carries it explicitly. `nbma 10.1.234.1` creates the static tunnel-to-NBMA mapping for the hub (the `S` entry in `show dmvpn`), and `multicast` sends broadcast/multicast traffic (the EIGRP hellos) to the hub, which is what lets the EIGRP adjacency form over an mGRE interface:
+
+```
+! R2 (R3 and R4 are identical apart from the addresses)
+interface Tunnel0
+ ip address 192.168.234.2 255.255.255.0
+ no ip redirects
+ ip nhrp authentication enarsi
+ ip nhrp network-id 100
+ ip nhrp holdtime 15
+ ip nhrp nhs 192.168.234.1 nbma 10.1.234.1 multicast
+ tunnel source Ethernet0/1
+ tunnel mode gre multipoint
+ tunnel key 100
+```
+
+![R2 Tunnel0 in Phase 2: mGRE with NHS, NBMA and multicast mapping](images/spoke_tun_int_p2.png)
+
+### Hub: split-horizon and next-hop-self
+
+The lab's starting configuration has the problem already covered in Phase 1. With split-horizon active on the hub's Tunnel0, R1 doesn't re-advertise the routes it learns from one spoke to the other spokes, so R2–R4 never see each other's LANs. The first fix is the same as before: `no ip split-horizon eigrp 90`.
+
+In Phase 2 that's no longer enough. By default, EIGRP sets itself as the next hop when it advertises a route. So R2 does learn 192.168.3.0/24 and 192.168.4.0/24, but **via 192.168.234.1**, the hub, and traffic keeps flowing through R1 exactly as in Phase 1. mGRE on the spokes alone gains nothing:
+
+![R2 with next-hop-self still on the hub: every route via 192.168.234.1, traceroute through the hub](images/p2_spoke_routes_next-hop-self.png)
+
+The answer to the lab's question ("are further changes to R1's EIGRP process needed?") is therefore yes: the hub must stop rewriting the next hop, so it passes the original spoke's tunnel address along unchanged:
 
 ```
 ! R1
 interface Tunnel0
  ip address 192.168.234.1 255.255.255.0
  no ip redirects
+ no ip next-hop-self eigrp 90
  no ip split-horizon eigrp 90
  ip nhrp authentication enarsi
  ip nhrp network-id 100
@@ -42,91 +76,77 @@ interface Tunnel0
  tunnel key 100
 ```
 
-`show interfaces Tunnel0` confirms the transport is `multi-GRE/IP`, sourced from the NBMA address 10.1.234.1:
+![R1 Tunnel0 in Phase 2: split-horizon and next-hop-self disabled](images/hub_tun_int_p2.png)
 
-![R1 Tunnel0 configuration and multi-GRE/IP transport](images/hub_tunnel_config.png)
+### Verification
 
-(`no ip split-horizon eigrp 90` is explained in [EIGRP over the hub-and-spoke overlay](#eigrp-over-the-hub-and-spoke-overlay) below.)
+R2 now sees each remote LAN with the **remote spoke** as next hop (192.168.3.0/24 via 192.168.234.3, 192.168.4.0/24 via 192.168.234.4). R2 still has no NBMA address for 192.168.234.3, so the first packets trigger an NHRP Resolution Request to the NHS, and in the meantime they are forwarded through the hub. That's why the first traceroute still shows two hops. Once R3 has answered, the spoke-to-spoke tunnel is up and the second traceroute reaches R3 in a single hop:
 
-## Spoke configuration — point-to-point GRE
+![R2 in Phase 2: remote LANs via the other spokes; first traceroute via the hub, second one direct](images/p2_spoke_routes_direct.png)
 
-What makes this **Phase 1** is the spokes: each one uses a regular point-to-point GRE tunnel with a static `tunnel destination` set to the hub's NBMA address, so a spoke can only ever send traffic into the hub. `ip nhrp nhs` points at the hub's tunnel address, so the spoke registers its tunnel-to-NBMA mapping with it:
+`show dmvpn` on R2 now lists two peers: the hub (static, `S`) and R3 (dynamic, `D`, created a few seconds earlier by the resolution). In `show ip nhrp`, the new entry is a `/32` for R3's **tunnel address**, the next hop of the EIGRP route, with the `nhop` flag. In Phase 2, NHRP only resolves next hops; the forwarding decision still comes entirely from the routing table:
+
+![R2 in Phase 2: dynamic peer R3 in show dmvpn and the /32 next-hop entry in show ip nhrp](images/p2_spoke_dmvpn_nhrp.png)
+
+The weakness of Phase 2 is that it relies on every spoke having **every specific route** with the right next hop. It can't use summarization or a default route from the hub, because the next hop would then be the hub again and no direct tunnel would ever be built. That doesn't scale with many spokes.
+
+## Phase 3 — NHRP redirect and shortcut
+
+### Hub: redirect plus summary
+
+Phase 3 moves the spoke-to-spoke decision from routing to NHRP. On the hub:
+
+- `ip nhrp redirect`: when R1 receives a packet on Tunnel0 and forwards it back out of Tunnel0 (spoke → hub → spoke), it sends the source spoke an **NHRP Traffic Indication** (redirect), meaning "there's a better path for this destination".
+- `ip summary-address eigrp 90 192.168.0.0 255.255.248.0`: R1 advertises out of Tunnel0 only the summary 192.168.0.0/21 (192.168.0.0–192.168.7.255, which covers all four LANs) instead of the individual /24s. The lab text suggests a 192.168.0.0/16. The /21 used here is tighter, still covers every site, and leaves the tunnel network 192.168.234.0/24 outside the summary.
+
+The Phase 2 EIGRP tweaks are **no longer needed** and have been removed. The summary is generated by R1 itself, not learned on Tu0, so split-horizon doesn't block it. And the next hop being the hub is now exactly what we want: the first packet goes to the hub, and the redirect does the rest.
 
 ```
-! R2 (R3 and R4 are identical apart from the addresses)
+! R1
 interface Tunnel0
- ip address 192.168.234.2 255.255.255.0
+ ip address 192.168.234.1 255.255.255.0
+ no ip redirects
  ip nhrp authentication enarsi
  ip nhrp network-id 100
  ip nhrp holdtime 15
- ip nhrp nhs 192.168.234.1
+ ip nhrp redirect
+ ip summary-address eigrp 90 192.168.0.0 255.255.248.0
  tunnel source Ethernet0/1
- tunnel destination 10.1.234.1
+ tunnel mode gre multipoint
  tunnel key 100
 ```
 
-The transport here is plain `GRE/IP`, with a fixed destination of 10.1.234.1:
+![R1 Tunnel0 in Phase 3: NHRP redirect and EIGRP summary, no more split-horizon/next-hop-self tweaks](images/hub_tun_int_p3.png)
 
-![R2 Tunnel0 configuration and GRE/IP point-to-point transport](images/spoke_tunnel_config.png)
+### Spokes: NHRP shortcut
 
-## NHRP registration
+The spoke side of Phase 3 is `ip nhrp shortcut`. On IOS-XE 17.x it's **enabled by default** on tunnel interfaces, so it doesn't appear in the running-config (`show running-config all | include nhrp shortcut` shows it) and the spokes' Tunnel0 is identical to Phase 2:
 
-Each spoke sends an NHRP Registration Request to the NHS telling it "tunnel address 192.168.234.X is reachable at NBMA address 10.1.234.X". With `ip nhrp holdtime 15`, the registrations are valid for 15 seconds and the spokes refresh them periodically (by default every holdtime/3, so every 5 seconds). A spoke that stops registering ages out of the hub's table quickly.
+![R2 Tunnel0 in Phase 3: unchanged from Phase 2, ip nhrp shortcut is a default](images/spoke_tun_int_p3.png)
 
-On the hub, `show dmvpn` reports `Type:Hub` with 3 NHRP peers, all **dynamic** (`D`): none of them is configured on R1, they were all learned from the registrations. `show ip nhrp` shows the same entries with the `registered` flag and the `expire` timer that keeps going back to ~15 seconds:
+With the summary in place, the routing table of a spoke has shrunk to a single EIGRP route, 192.168.0.0/21 via the hub. Before any spoke-to-spoke traffic, the only NHRP peer is the hub:
 
-![R1 show dmvpn (3 dynamic peers) and show ip nhrp (registered entries)](images/hub_dmvpn_nhrp.png)
+![R2 in Phase 3: only the 192.168.0.0/21 summary via the hub, single static NHRP peer](images/p3_spoke_summary_route.png)
 
-The same registrations also create the **multicast mappings** on the hub (`show ip nhrp multicast` lists 10.1.234.2/.3/.4 as `dynamic`). That's what lets the EIGRP hellos (multicast to 224.0.0.10) get replicated as unicast GRE packets to every registered spoke. There's no need for `ip nhrp map multicast dynamic`, because IOS-XE adds these entries automatically when a spoke registers.
+### Verification: two traceroutes
 
-On a spoke, `show dmvpn` is empty: a point-to-point GRE tunnel doesn't need NHRP to resolve the destination, so there are no NHRP peer entries to show. The relationship with the hub is visible with `show ip nhrp nhs detail` instead: 192.168.234.1 is in state **RE** (Expecting replies / Responding), and the request/reply counters keep increasing with every registration refresh:
+As the lab asks, here is a traceroute from R2 to 192.168.3.1 sourced from 192.168.2.1, run twice:
 
-![R2: empty show dmvpn, and NHS 192.168.234.1 in state RE](images/spoke_nhrp_registration.png)
+1. **First traceroute**: R2 matches the summary and sends the packet to the hub. R1 forwards it to R3 out of the same Tunnel0 and, because of `ip nhrp redirect`, sends R2 a Traffic Indication. R2 then sends an NHRP Resolution Request for 192.168.3.1, which travels through the hub to R3. R3 answers **directly** to R2 with its whole LAN prefix, 192.168.3.0/24, at NBMA 10.1.234.3. The trace shows two hops: 192.168.234.1, then 192.168.234.3.
+2. **Second traceroute**: the shortcut is in place, so the packet goes straight from R2 to R3. That's one hop.
 
-## EIGRP over the hub-and-spoke overlay
+![Two traceroutes from R2 to 192.168.3.1: the first via the hub, the second direct](images/p3_traceroute_twice.png)
 
-EIGRP is enabled on the tunnel and on the loopback of every router (classic mode, AS 90). The spokes are configured as **stubs** (`eigrp stub connected`): they advertise only their connected LAN and are never queried by the hub. That's the right choice for branch routers that should never be used as transit.
+### What the shortcut added
 
-```
-! R1
-router eigrp 90
- network 192.168.1.1 0.0.0.0
- network 192.168.234.1 0.0.0.0
-!
-! R2 (R3 and R4 the same, with their own addresses)
-router eigrp 90
- network 192.168.2.1 0.0.0.0
- network 192.168.234.2 0.0.0.0
- eigrp stub connected
-```
+After the traceroutes, the NHRP table and the routing table of R2 show what the shortcut created:
 
-The hub forms 3 adjacencies, all on Tu0, and learns each spoke's LAN directly from that spoke (`show ip eigrp neighbors detail` also reports each of them as `Stub Peer Advertising (CONNECTED) Routes`):
+- In `show ip nhrp`, there's a new entry for the **network** 192.168.3.0/24 via 192.168.234.3 (NBMA 10.1.234.3), flagged `rib`, plus a `/32` for R3's tunnel address (`nhop rib`). The 192.168.2.0/24 `local` entry is R2's own prefix, as it was advertised to R3 in the resolution exchange.
+- In `show ip route`, two **NHRP routes** (code `H`, AD 250) appear: 192.168.3.0/24 via 192.168.234.3 and 192.168.234.3/32. They are more specific than the EIGRP summary, so longest match sends 192.168.3.0/24 traffic directly to R3 while everything else still follows the summary to the hub.
 
-![R1: three EIGRP neighbors on Tu0 and the three spoke LANs](images/hub_eigrp_neighbors_routes.png)
+![R2 after the shortcut: NHRP entry for 192.168.3.0/24 and the H routes in the routing table](images/p3_spoke_nhrp_shortcut.png)
 
-A spoke only peers with the hub, since that's the only endpoint its p2p tunnel can reach. Spokes never form adjacencies with each other. Still, R2 learns the LANs of R3 and R4 too, all with the hub (192.168.234.1) as next hop and a higher metric than the hub's own LAN, because they are one extra hop away:
-
-![R2: a single EIGRP neighbor (the hub) and all remote LANs via 192.168.234.1](images/spoke_eigrp_routes.png)
-
-### Why split-horizon must be disabled on the hub
-
-For the hub, all spokes sit behind the **same interface**, Tunnel0. Split-horizon forbids advertising a route out of the interface it was learned on, so by default R1 would learn 192.168.3.0/24 from R3 on Tu0 and then refuse to advertise it back out of Tu0 to R2 and R4. Temporarily re-enabling it on the hub proves it: once the adjacencies come back up, R2 only knows the hub's own LAN, 192.168.1.0/24, and the other spokes have disappeared:
-
-```
-! R1
-interface Tunnel0
- ip split-horizon eigrp 90
-```
-
-![R2 routing table with split-horizon enabled on the hub: only 192.168.1.0/24](images/spoke_routes_with_split-horizon_on_hub.png)
-
-That's why the hub keeps `no ip split-horizon eigrp 90` on Tunnel0. With it removed again, R2 relearns 192.168.3.0/24 and 192.168.4.0/24, as in the previous screenshot.
-
-## Spoke-to-spoke traffic in Phase 1
-
-In Phase 1, the spokes have no way to build a direct tunnel to each other. Their GRE tunnel has a fixed destination (the hub), and the routes to the other spokes point at the hub anyway. A traceroute from R2's LAN to R3's LAN shows the two hops: first the hub (192.168.234.1), then R3 (192.168.234.3). Every packet between two branches has to go through the hub, entering and leaving on the same Tunnel0, which is exactly the limitation that Phase 2 (spoke-to-spoke tunnels with mGRE on the spokes) and Phase 3 (NHRP redirect/shortcut) address:
-
-![Traceroute from R2 to R3's LAN going through the hub](images/spoke-to-spoke_via_hub.png)
+The difference from Phase 2 is that in Phase 2 NHRP only resolved the **next hop** (a /32 tunnel address) of a route that EIGRP had already installed with the right next hop. In Phase 3, EIGRP only knows the summary via the hub, and it's **NHRP** that learns the destination prefix and installs the specific route in the RIB. The spokes carry just one route plus the shortcuts actually in use, which time out when the traffic stops.
 
 ## Running the lab
 
@@ -134,7 +154,7 @@ In Phase 1, the spokes have no way to build a direct tunnel to each other. Their
 # create the NBMA bridge if missing (it's a host bridge, so it must exist before deploy)
 ./scripts/create_bridge.sh br-nbma
 
-# deploy / destroy (from the dmvpn-p1 directory)
+# deploy / destroy (from the dmvpn-p2-p3 directory)
 clab deploy
 clab destroy --cleanup
 ```
