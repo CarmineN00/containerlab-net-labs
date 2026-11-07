@@ -1,0 +1,21 @@
+name: ospf-07
+
+topology:
+  defaults:
+    kind: cisco_iol
+    image: vrnetlab/cisco_iol:17.18.02
+
+  nodes:
+    r1: { mgmt-ipv4: 172.20.20.10 }
+    r2: { mgmt-ipv4: 172.20.20.20 }
+    r3: { mgmt-ipv4: 172.20.20.30 }
+    r4: { mgmt-ipv4: 172.20.20.40 }        
+    r5: { mgmt-ipv4: 172.20.20.50 }
+
+  links:
+    - endpoints: ["r1:eth1", "r2:eth1"]
+    - endpoints: ["r3:eth2", "r2:eth2"]
+    - endpoints: ["r1:eth2", "r3:eth1"]
+    - endpoints: ["r1:eth3", "r4:eth1"]
+    - endpoints: ["r3:eth3", "r5:eth1"]
+    - endpoints: ["r4:eth2", "r5:eth2"]
