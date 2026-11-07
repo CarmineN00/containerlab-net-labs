@@ -1,0 +1,15 @@
+name: copp
+topology:
+  defaults:
+    kind: cisco_iol
+    image: vrnetlab/cisco_iol:17.18.02
+    
+  nodes:
+    wan: { mgmt-ipv4: 172.20.20.10, startup-config: configs/wan.cfg }
+    core: { mgmt-ipv4: 172.20.20.20 startup-config: configs/core.cfg }
+    mgmt: { mgmt-ipv4: 172.20.20.30 startup-config: configs/mgmt.cfg }
+      
+  links:
+    - endpoints: ["wan:Ethernet0/1", "core:Ethernet0/1"]
+    - endpoints: ["core:Ethernet0/2", "mgmt:Ethernet0/1"]
+
