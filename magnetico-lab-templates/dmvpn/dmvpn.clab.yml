@@ -1,0 +1,20 @@
+name: dmvpn
+topology:
+  defaults:
+    kind: cisco_iol
+    image: vrnetlab/cisco_iol:17.18.02
+    
+  nodes:
+    r1: { mgmt-ipv4: 172.20.20.10 }
+    r2: { mgmt-ipv4: 172.20.20.20 }
+    r3: { mgmt-ipv4: 172.20.20.30 }
+    r4: { mgmt-ipv4: 172.20.20.40 }
+    
+    br-nbma:
+      kind: bridge
+      
+  links:
+    - endpoints: ["r1:Ethernet0/1", "br-nbma:r1-nbma"]
+    - endpoints: ["r2:Ethernet0/1", "br-nbma:r2-nbma"]
+    - endpoints: ["r3:Ethernet0/1", "br-nbma:r3-nbma"]
+    - endpoints: ["r4:Ethernet0/1", "br-nbma:r4-nbma"]
