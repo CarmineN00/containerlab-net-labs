@@ -1,0 +1,25 @@
+name: pbr-route-redistribution
+
+topology:
+  defaults:
+    kind: cisco_iol
+    image: vrnetlab/cisco_iol:17.18.02
+
+  nodes:
+    r1: { mgmt-ipv4: 172.20.20.10, startup-config: configs/r1.cfg }
+    r2: { mgmt-ipv4: 172.20.20.20, startup-config: configs/r2.cfg }
+    r3: { mgmt-ipv4: 172.20.20.30, startup-config: configs/r3.cfg }
+    r4: { mgmt-ipv4: 172.20.20.40, startup-config: configs/r4.cfg }        
+    r5: { mgmt-ipv4: 172.20.20.50, startup-config: configs/r5.cfg }
+    isp1: { mgmt-ipv4: 172.20.20.60, startup-config: configs/isp1.cfg }
+    isp2: { mgmt-ipv4: 172.20.20.70, startup-config: configs/isp2.cfg }
+    
+  links:
+    - endpoints: ["r1:eth1", "r2:eth1"]
+    - endpoints: ["r1:eth2", "r5:eth1"]
+    - endpoints: ["r2:eth2", "isp1:eth1"]
+    - endpoints: ["r2:eth3", "isp2:eth1"]
+    - endpoints: ["r2:eth4", "r3:eth1"]
+    - endpoints: ["r5:eth2", "r4:eth1"]
+    - endpoints: ["r4:eth2", "r3:eth2"]
+    - endpoints: ["isp1:eth2", "isp2:eth2"]
