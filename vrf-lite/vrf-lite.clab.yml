@@ -5,8 +5,8 @@ topology:
     image: vrnetlab/cisco_iol:17.18.02
     
   nodes:
-    r1: { mgmt-ipv4: 172.20.20.10 }
-    r2: { mgmt-ipv4: 172.20.20.20 }
+    r1: { mgmt-ipv4: 172.20.20.10, startup-config: configs/r1.cfg }
+    r2: { mgmt-ipv4: 172.20.20.20, startup-config: configs/r2.cfg }
       
   links:
     - endpoints: ["r1:Ethernet0/1", "r2:Ethernet0/1"]
