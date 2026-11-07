@@ -1,4 +1,4 @@
-name: dmvpn
+name: dmvpn-ipsec
 topology:
   defaults:
     kind: cisco_iol

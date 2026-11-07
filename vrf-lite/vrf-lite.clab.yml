@@ -1,0 +1,13 @@
+name: vrf-lite
+topology:
+  defaults:
+    kind: cisco_iol
+    image: vrnetlab/cisco_iol:17.18.02
+    
+  nodes:
+    r1: { mgmt-ipv4: 172.20.20.10 }
+    r2: { mgmt-ipv4: 172.20.20.20 }
+      
+  links:
+    - endpoints: ["r1:Ethernet0/1", "r2:Ethernet0/1"]
+
