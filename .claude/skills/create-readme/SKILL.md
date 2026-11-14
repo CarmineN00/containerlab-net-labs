@@ -15,7 +15,8 @@ Argomento atteso: la directory del lab. Se manca, chiederla.
 
 - **Solo gli aspetti più evidenti.** Non eseguire tutte le prove possibili del concetto: per ogni obiettivo del lab scegli la verifica più diretta e leggibile (la config chiave, lo stato che dimostra che funziona, al massimo un prima/dopo). Tipicamente 4–6 screenshot più la topologia. Se due output dimostrano la stessa cosa, tienine uno.
 - **Riusa il tooling esistente, non reinventarlo.** Deploy con `clab deploy` dentro la directory del lab; `scripts/lab_tools.py` (`export-configs`, `open-sessions`); `scripts/create_bridge.sh` per i bridge host. Per le catture usa gli script di questa skill (sotto), non scriverne di nuovi.
-- **Gli screenshot sono catture reali di finestre Windows Terminal** con una sessione SSH vera verso il router. **Mai** generare immagini finte (PIL, HTML→PNG, render del testo, ecc.).
+- **Gli screenshot sono catture reali di finestre Windows Terminal** con una sessione SSH vera verso il router. **Mai** generare immagini finte degli output (PIL, HTML→PNG, render del testo, ecc.).
+- **L'unica immagine che si disegna è la topologia**, e la disegno sempre io: non chiederla all'utente e non lasciarla mancante (vedi "Disegnare la topologia").
 - Non modificare `configs/` né la config dei nodi senza chiedere: lo scopo è osservare e documentare. Comandi exec che non toccano la config (`clear crypto session`, `clear ip nhrp`, ping, traceroute) vanno bene. Se una dimostrazione richiede una modifica temporanea della config, proporla all'utente e alla fine verificare che la config sia tornata identica a `configs/`.
 - Commit solo se l'utente lo chiede.
 
@@ -28,6 +29,19 @@ Argomento atteso: la directory del lab. Se manca, chiederla.
 - `session.sh`, `list_wt.ps1`, `capture.ps1`: usati da `shot.sh`.
 - Scegli `cols`/`rows` in base all'output (di solito 100 colonne; righe ≈ righe di output + 4) in modo che non ci siano righe tagliate in alto né troppo vuoto in basso.
 - Tieni i `cmdfile` nella scratchpad, non nel repo.
+- `render_topology.sh <in.html> <out.png> <width> <height>`: rende in PNG, con Chrome headless di Windows, un diagramma di topologia scritto come SVG inline in un HTML.
+
+## Disegnare la topologia
+
+`images/<lab>_lab_topology.png` la creo io, nello stesso formato di quelle degli altri lab (riferimenti: `vrf-lite/images/vrf-lite_lab_topology.png`, `bgp-path-selection/images/bgp-path-selection_lab_topology.png`, e `scripts/topology_example_copp.html` di questa skill come sorgente da cui partire):
+
+- PNG su fondo bianco, **2000 px di larghezza** (altezza secondo il contenuto), font Segoe UI.
+- Router: riquadri arrotondati con fill `#EEEBFB` e bordo `#5B4BC4`; nome in grassetto `#3A2E99`, sotto Lo0 / ruolo in `#5B4BC4`.
+- Aree (AS, VRF, area OSPF, range fidato...): riquadri arrotondati grandi con bordo colorato e fill molto chiaro (rosso `#A0282D`/`#FCF3F2`, verde `#0F6B4A`/`#EFF7F3`), titolo `<nome> · <AS/range>` in alto.
+- Collegamenti: subnet sopra la linea, `Et0/x .n` vicino a ciascun estremo; colore della linea uguale a quello dell'area o grigio `#6B6B6B` per i collegamenti tra aree. Legenda in fondo.
+- Contenuto preso da `.clab.yml`, `configs/` e dal diagramma del PDF, più gli elementi specifici del lab (es. la policy CoPP, le sessioni BGP).
+
+Scrivo l'HTML nella scratchpad, lo rendo con `render_topology.sh` e **apro il PNG con Read** per controllare che nessun testo si sovrapponga o esca dai riquadri.
 
 ## Passi
 
@@ -41,11 +55,11 @@ Argomento atteso: la directory del lab. Se manca, chiederla.
 - Verifica che i nodi rispondano in SSH (gli IP di management sono nel `.clab.yml`, credenziali default `admin`/`admin`). Se non sono su: crea eventuali bridge host richiesti con `scripts/create_bridge.sh`, poi `clab deploy` dalla directory del lab, e attendi il boot.
 
 ### 3. Esplorare via SSH (non interattivo)
-Prima di catturare, guarda gli output in modo non interattivo per scegliere cosa mostrare. IOS accetta un solo comando per sessione `ssh host "cmd"`, quindi per più comandi usa netmiko dal `venv/` del repo (come fa `lab_tools.py`). I valori citati nel README (flag, stati, metriche, next hop, contatori) devono venire dagli output reali, non dalla teoria.
+Prima di catturare, guarda gli output in modo non interattivo per scegliere cosa mostrare. IOS accetta un solo comando per sessione `ssh host "cmd"`, quindi per più comandi usa netmiko dal `.venv/` del repo (come fa `lab_tools.py`). Collegati sempre all'IP di management IPv4 (172.20.20.x) e non al nome `clab-<lab>-<nodo>`: il nome può risolversi in un IPv6 che nelle config salvate appartiene a un altro nodo. Controlla il prompt prima di fidarti dell'output. I valori citati nel README (flag, stati, metriche, next hop, contatori) devono venire dagli output reali, non dalla teoria.
 
 ### 4. Catturare gli screenshot
 - Per ogni concetto scelto, `shot.sh` con i comandi minimi che lo mostrano.
-- Nomi file in snake_case descrittivo, stile delle `images/` esistenti (es. `hub_eigrp_neighbors_routes.png`), più `dmvpn_lab_topology.png` / `<lab>_lab_topology.png` per la topologia (il diagramma lo fornisce l'utente o lo si riusa da un lab con topologia identica: non generarlo).
+- Nomi file in snake_case descrittivo, stile delle `images/` esistenti (es. `hub_eigrp_neighbors_routes.png`), più `dmvpn_lab_topology.png` / `<lab>_lab_topology.png` per la topologia (la disegno io come descritto in "Disegnare la topologia"; la riuso da un altro lab solo se la topologia è identica e l'utente è d'accordo).
 - Per output dipendenti dallo stato (tunnel on-demand, SA, adiacenze), prepara lo stato iniziale con comandi exec via netmiko e verifica che sia quello atteso prima di lanciare `shot.sh`. Attenzione ai timer brevi (es. holdtime NHRP): metti prima/dopo nella stessa finestra invece che in due catture separate.
 - **Apri ogni PNG con Read** e controlla: comando visibile in cima, nessuna riga troncata o con `$` (terminal width), nessuna sequenza di escape spuria, stato transitorio indesiderato (es. SA `deleted`). Se qualcosa non va, rifai la cattura.
 

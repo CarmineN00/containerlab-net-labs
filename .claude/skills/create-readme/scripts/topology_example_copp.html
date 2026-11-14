@@ -1,0 +1,87 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:#fff}svg{display:block}</style></head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1080" viewBox="0 0 2000 1080" font-family="Segoe UI, sans-serif">
+  <rect width="2000" height="1080" fill="#fff"/>
+
+  <!-- EIGRP area -->
+  <rect x="80" y="50" width="1840" height="700" rx="40" fill="#EFF7F3" stroke="#0F6B4A" stroke-width="3"/>
+  <text x="1000" y="100" text-anchor="middle" font-size="32" font-weight="600" fill="#0B4D36">EIGRP AS 101 · trusted range 10.10.0.0/16</text>
+
+  <!-- CoPP box -->
+  <rect x="560" y="140" width="880" height="250" rx="22" fill="#FDF5EC" stroke="#B5651D" stroke-width="3"/>
+  <text x="1000" y="183" text-anchor="middle" font-size="25" font-weight="600" fill="#8A4A12">control-plane · service-policy input CoPP-POLICY</text>
+  <g font-size="22" fill="#8A4A12">
+    <text x="600" y="228"><tspan font-weight="600">CoPP-CRITICAL</tspan></text>
+    <text x="900" y="228">EIGRP from 10.10.0.0/16</text><text x="1400" y="228" text-anchor="end">80 kbps</text>
+    <text x="600" y="264"><tspan font-weight="600">CoPP-IMPORTANT</tspan></text>
+    <text x="900" y="264">Telnet, SSH, ICMP from 10.10.0.0/16</text><text x="1400" y="264" text-anchor="end">20 kbps</text>
+    <text x="600" y="300"><tspan font-weight="600">CoPP-TRACEROUTE</tspan></text>
+    <text x="900" y="300">UDP 33434–33464 from 10.10.0.0/16</text><text x="1400" y="300" text-anchor="end">20 kbps</text>
+    <text x="600" y="336"><tspan font-weight="600">CoPP-TRACEROUTE-DENY</tspan></text>
+    <text x="900" y="336">UDP 33434–33464 from any other source</text><text x="1400" y="336" text-anchor="end">drop</text>
+    <text x="600" y="372" font-style="italic">class-default</text>
+    <text x="900" y="372" font-style="italic">everything else</text><text x="1400" y="372" text-anchor="end" font-style="italic">no action</text>
+  </g>
+  <line x1="1000" y1="390" x2="1000" y2="470" stroke="#B5651D" stroke-width="4" stroke-dasharray="12 8"/>
+
+  <!-- links -->
+  <line x1="560" y1="560" x2="820" y2="560" stroke="#0F6B4A" stroke-width="5"/>
+  <line x1="1180" y1="560" x2="1440" y2="560" stroke="#0F6B4A" stroke-width="5"/>
+  <g font-size="22" fill="#0B4D36" text-anchor="middle">
+    <text x="690" y="540">10.10.12.0/24</text>
+    <text x="1310" y="540">10.10.13.0/24</text>
+  </g>
+  <g font-size="20" fill="#555">
+    <text x="572" y="598">Et0/1 .2</text>
+    <text x="808" y="598" text-anchor="end">Et0/1 .1</text>
+    <text x="1192" y="598">Et0/2 .1</text>
+    <text x="1428" y="598" text-anchor="end">Et0/1 .3</text>
+  </g>
+
+  <!-- mgmt links -->
+  <g stroke="#6B6B6B" stroke-width="4" stroke-dasharray="12 8">
+    <line x1="380" y1="660" x2="380" y2="870"/>
+    <line x1="1000" y1="660" x2="1000" y2="870"/>
+    <line x1="1620" y1="660" x2="1620" y2="870"/>
+  </g>
+  <g font-size="20" fill="#555">
+    <text x="395" y="820">Et0/0 .10</text>
+    <text x="1015" y="820">Et0/0 .20</text>
+    <text x="1635" y="820">Et0/0 .30</text>
+  </g>
+
+  <!-- routers -->
+  <g stroke="#5B4BC4" stroke-width="3" fill="#EEEBFB">
+    <rect x="200" y="460" width="360" height="200" rx="22"/>
+    <rect x="820" y="460" width="360" height="200" rx="22"/>
+    <rect x="1440" y="460" width="360" height="200" rx="22"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="380" y="518" font-size="36" font-weight="600" fill="#3A2E99">WAN</text>
+    <text x="380" y="566" font-size="23" fill="#5B4BC4">Lo0 10.10.2.2/32</text>
+    <text x="380" y="604" font-size="23" fill="#5B4BC4">Lo1 192.168.2.2/32</text>
+    <text x="380" y="638" font-size="19" font-style="italic" fill="#5B4BC4">untrusted test source</text>
+
+    <text x="1000" y="518" font-size="36" font-weight="600" fill="#3A2E99">CORE</text>
+    <text x="1000" y="566" font-size="23" fill="#5B4BC4">Lo0 10.10.1.1/32</text>
+    <text x="1000" y="604" font-size="23" fill="#5B4BC4">protected by CoPP</text>
+
+    <text x="1620" y="518" font-size="36" font-weight="600" fill="#3A2E99">MGMT</text>
+    <text x="1620" y="566" font-size="23" fill="#5B4BC4">Lo0 10.10.3.3/32</text>
+  </g>
+
+  <!-- mgmt network -->
+  <rect x="200" y="870" width="1600" height="70" rx="18" fill="#F4F4F4" stroke="#6B6B6B" stroke-width="3"/>
+  <text x="1000" y="915" text-anchor="middle" font-size="24" fill="#444">VRF clab-mgmt · 172.20.20.0/24 · containerlab management (SSH lands in class-default)</text>
+
+  <!-- legend -->
+  <line x1="300" y1="1020" x2="380" y2="1020" stroke="#0F6B4A" stroke-width="5"/>
+  <text x="400" y="1027" font-size="22" fill="#444">EIGRP links (AS 101)</text>
+  <line x1="720" y1="1020" x2="800" y2="1020" stroke="#B5651D" stroke-width="4" stroke-dasharray="12 8"/>
+  <text x="820" y="1027" font-size="22" fill="#444">CoPP policy on CORE's control plane</text>
+  <line x1="1260" y1="1020" x2="1340" y2="1020" stroke="#6B6B6B" stroke-width="4" stroke-dasharray="12 8"/>
+  <text x="1360" y="1027" font-size="22" fill="#444">Et0/0 in VRF clab-mgmt</text>
+</svg>
+</body></html>
