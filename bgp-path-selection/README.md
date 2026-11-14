@@ -186,4 +186,4 @@ clab deploy
 clab destroy --cleanup
 ```
 
-No host bridge is needed: all links are point-to-point between the routers. The nodes `r1`–`r6` are reachable via containerlab console/exec or SSH on 172.20.20.10–60 (user `admin`). `scripts/lab_tools.py` can export the running configs back into `configs/` (`export-configs --topo bgp-path-selection.clab.yml`) and open an SSH session to every router at once (`open-sessions`).
+The nodes `r1`–`r6` are reachable via containerlab console/exec or SSH on 172.20.20.10–60 (user `admin`). `scripts/lab_tools.py` can export the running configs back into `configs/` (`export-configs --topo bgp-path-selection.clab.yml`) and open an SSH session to every router at once (`open-sessions`).

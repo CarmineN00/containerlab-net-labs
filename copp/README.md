@@ -193,4 +193,4 @@ clab deploy
 clab destroy --cleanup
 ```
 
-No host bridge is needed: the three routers are connected back to back. The nodes `wan`, `core` and `mgmt` are reachable via containerlab console/exec or SSH on 172.20.20.10, 172.20.20.20 and 172.20.20.30 (user `admin`). `scripts/lab_tools.py` can export the running configs back into `configs/` (`export-configs`) and open an SSH session to every router at once (`open-sessions`). To repeat a test from zero, clear the CoPP counters on CORE with `clear control-plane *`.
+The nodes `wan`, `core` and `mgmt` are reachable via containerlab console/exec or SSH on 172.20.20.10, 172.20.20.20 and 172.20.20.30 (user `admin`). `scripts/lab_tools.py` can export the running configs back into `configs/` (`export-configs`) and open an SSH session to every router at once (`open-sessions`). To repeat a test from zero, clear the CoPP counters on CORE with `clear control-plane *`.

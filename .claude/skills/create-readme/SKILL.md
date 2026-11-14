@@ -68,7 +68,7 @@ In inglese, con questa struttura:
 1. `# <Titolo lab>` e, se il lab deriva da materiale di corso, `## Credits` (es. ENARSI Hands-On v1.0, Magnetico Associazione Culturale, con link).
 2. `## Topology`: paragrafo su cosa fa/aggiunge il lab, immagine della topologia, bullet sui livelli rilevanti, tabella config file / hostname / ruolo / indirizzi / mgmt IP, nota sul mapping `ethN` ↔ `Ethernet0/N` per IOL.
 3. Una sezione `##` per concetto, ognuna con: perché serve → blocco di config rilevante (solo le righe utili, commentate `! R1`) → screenshot con alt text descrittivo → interpretazione dell'output con i valori reali.
-4. `## Running the lab`: bridge da creare, `clab deploy` / `clab destroy --cleanup`, accesso ai nodi e uso di `lab_tools.py`.
+4. `## Running the lab`: `clab deploy` / `clab destroy --cleanup`, accesso ai nodi e uso di `lab_tools.py`. Il bridge host (con il comando `scripts/create_bridge.sh`) va citato **solo se il lab ne usa uno**; se non serve non scrivere nulla in proposito (niente "No host bridge is needed").
 
 Stile: prosa spiegata, non elenchi telegrafici dove serve un ragionamento; flag/stati/comandi esatti in backtick; link relativi agli altri lab quando un concetto è già spiegato lì.
 

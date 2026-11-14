@@ -121,4 +121,4 @@ clab deploy
 clab destroy --cleanup
 ```
 
-No host bridge is needed: R1 and R2 are connected back to back. The nodes `r1` and `r2` are reachable via containerlab console/exec or SSH on 172.20.20.10 and 172.20.20.20 (user `admin`). `scripts/lab_tools.py` can export the running configs back into `configs/` (`export-configs`) and open an SSH session to every router at once (`open-sessions`).
+The nodes `r1` and `r2` are reachable via containerlab console/exec or SSH on 172.20.20.10 and 172.20.20.20 (user `admin`). `scripts/lab_tools.py` can export the running configs back into `configs/` (`export-configs`) and open an SSH session to every router at once (`open-sessions`).
