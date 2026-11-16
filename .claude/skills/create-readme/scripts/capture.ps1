@@ -8,12 +8,16 @@ public class W {
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
   [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int c);
   [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr h, IntPtr hdc, uint f);
+  [DllImport("user32.dll")] public static extern void keybd_event(byte k, byte s, uint f, UIntPtr e);
   [StructLayout(LayoutKind.Sequential)] public struct RECT { public int L, T, R, B; }
   [DllImport("dwmapi.dll")] public static extern int DwmGetWindowAttribute(IntPtr h, int a, out RECT r, int s);
 }
 "@
 [W]::SetProcessDPIAware() | Out-Null
 $h = [IntPtr]$Hwnd
+# Un tasto ALT simulato sblocca il "foreground lock" di Windows: senza, se in primo piano
+# c'è un'altra app (es. Claude desktop), SetForegroundWindow fallisce e si cattura quella.
+[W]::keybd_event(0x12, 0, 0, [UIntPtr]::Zero); [W]::keybd_event(0x12, 0, 2, [UIntPtr]::Zero)
 [W]::ShowWindow($h, 9) | Out-Null; [W]::SetForegroundWindow($h) | Out-Null
 Start-Sleep -Milliseconds 700
 $r = New-Object W+RECT
