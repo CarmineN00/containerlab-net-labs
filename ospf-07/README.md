@@ -144,6 +144,29 @@ On R5 there is only one path, via R3, even though going through R4 costs the sam
 
 R1 is not an ABR, which is why it can install both paths toward R5's loopback in the [cost section](#restoring-the-default-costs).
 
+## MTU mismatch and EXSTART/EXCHANGE
+
+This is not one of the lab tasks. It's a classic OSPF adjacency problem that fits this topology well.
+
+OSPF does **not** carry the MTU in Hello packets. It carries it in **Database Description (DBD, type 2)** packets, in the *Interface MTU* field, set to the IP MTU of the interface that sends them. RFC 2328 says a router must reject a DBD whose Interface MTU is larger than the MTU of its own receiving interface.
+
+Because Hellos don't check the MTU, two routers with different MTUs still see each other and reach 2-WAY. If the segment is broadcast, they also elect the DR and BDR. The problem starts in **EXSTART**. There the two routers exchange empty DBDs (I/M/MS bits set) to agree on master and slave: the higher router-id becomes master and picks the initial sequence number. That negotiation only completes if DBDs get through in both directions. With a mismatch, the router with the smaller MTU drops every DBD from its peer, so the negotiation never finishes.
+
+Take the R1–R4 link as an example, with `ip mtu 1400` on R4 Et0/1 only:
+
+- R4 (RID 172.16.4.4) is the master and has the smaller MTU, so it discards R1's DBDs (1500 > 1400). It keeps retransmitting its initial DBD and stays in **EXSTART**.
+- R1 (RID 10.10.1.1) accepts R4's DBDs (1400 fits in 1500), so it takes the slave role, moves to **EXCHANGE** and replies. R4 throws those replies away.
+- After a number of unanswered retransmissions, IOS drops the neighbor (`Too many retransmissions`) and starts again. The adjacency keeps cycling and never reaches FULL. `debug ip ospf adj` on R4 reports that the neighbor has a larger interface MTU.
+
+If the MTU were lowered on R1 instead, the master (R4) would never get the slave's acknowledgment and both sides would stay in EXSTART. Either way, the typical sign of an MTU mismatch is a neighbor stuck in EXSTART/EXCHANGE, never one stuck in INIT or 2-WAY.
+
+Two more details:
+
+- **An adjacency that is already FULL is not affected.** The MTU is only checked in DBDs, so changing it on a working link causes no visible effect until the neighbor is reset (reload, `clear ip ospf process`, interface flap). That's why this fault can stay hidden for a long time.
+- **Why OSPF enforces the check.** After EXCHANGE the routers send LSUs, which can be as large as the sender's MTU. Without the check, the adjacency could reach FULL while large LSUs are fragmented or dropped on the way, leaving the databases out of sync. OSPF catches the problem at the DBD stage instead.
+
+The real fix is to match the MTU on both ends of the link. `ip ospf mtu-ignore` on the interface skips the check, but it only hides the mismatch: LSUs larger than the real MTU are still a problem.
+
 ## Running the lab
 
 ```bash
