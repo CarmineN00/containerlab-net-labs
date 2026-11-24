@@ -13,7 +13,7 @@ Output, nella directory del lab:
 - `<nome_lab>.clab.yml`
 - `configs/<nodo>.cfg` per ogni router, con `<nodo>` = nome dell'apparato nel disegno della topologia (es. `configs/r1.cfg`, `configs/pe1.cfg`)
 
-Se manca il nome/la directory del lab o le config, chiederli. Il nome del lab è quello della directory.
+Se manca il nome/la directory del lab o le config, chiederli. Il nome del lab è quello della directory e segue il PDF: `rs-labnn-<titolo>`, cioè `rs-` (routing e switching, cioè ENARSI) seguito dal nome del PDF senza il prefisso `ENARSI-Hands-on-v1.0-`, **tutto in minuscolo** (es. `ENARSI-Hands-on-v1.0-LAB05-BGP-Path-selection.pdf` → `rs-lab05-bgp-path-selection/`). Lo stesso nome vale per il file `<nome_lab>.clab.yml` e per il campo `name:`. Se il PDF ha ancora il numero in fondo (`...-TITOLO-LABnn.pdf`), segnalarlo e usare comunque `rs-labnn-titolo`.
 
 ## Regole (non negoziabili)
 

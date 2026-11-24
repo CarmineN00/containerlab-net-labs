@@ -5,7 +5,7 @@ description: Crea o riscrive il README.md di un qualsiasi lab containerlab del r
 
 # Create README: lab → SSH → screenshot → README
 
-Obiettivo: partendo da un lab già configurato (`configs/` completi, lab deployabile), produrre un `README.md` esplicativo con screenshot reali degli output dei nodi, coerente con i README esistenti del repo. Prima di scrivere, leggi 1–2 README di lab già documentati (es. `ospf/`, `dmvpn-p1/`, `dmvpn-p2-p3/`) come riferimento di stile.
+Obiettivo: partendo da un lab già configurato (`configs/` completi, lab deployabile), produrre un `README.md` esplicativo con screenshot reali degli output dei nodi, coerente con i README esistenti del repo. Prima di scrivere, leggi 1–2 README di lab già documentati (es. `ospf/`, `rs-lab01-dmvpn/`, `rs-lab02-dmvpn-fase-2-e-3/`) come riferimento di stile.
 
 Argomento atteso: la directory del lab. Se manca, chiederla.
 
@@ -33,7 +33,7 @@ Argomento atteso: la directory del lab. Se manca, chiederla.
 
 ## Disegnare la topologia
 
-`images/<lab>_lab_topology.png` la creo io, nello stesso formato di quelle degli altri lab (riferimenti: `vrf-lite/images/vrf-lite_lab_topology.png`, `bgp-path-selection/images/bgp-path-selection_lab_topology.png`, e `scripts/topology_example_copp.html` di questa skill come sorgente da cui partire):
+`images/<lab>_lab_topology.png` la creo io, nello stesso formato di quelle degli altri lab (riferimenti: `rs-lab04-vrf-lite/images/vrf-lite_lab_topology.png`, `rs-lab05-bgp-path-selection/images/bgp-path-selection_lab_topology.png`, e `scripts/topology_example_copp.html` di questa skill come sorgente da cui partire):
 
 - PNG su fondo bianco, **2000 px di larghezza** (altezza secondo il contenuto), font Segoe UI.
 - Router: riquadri arrotondati con fill `#EEEBFB` e bordo `#5B4BC4`; nome in grassetto `#3A2E99`, sotto Lo0 / ruolo in `#5B4BC4`.
