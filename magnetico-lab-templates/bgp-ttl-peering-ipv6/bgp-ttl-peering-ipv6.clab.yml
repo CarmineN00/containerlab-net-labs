@@ -7,13 +7,13 @@ topology:
   nodes:
     r1: { mgmt-ipv4: 172.20.20.10, mgmt-ipv6: 3fff:172:20:20::10, startup-config: configs/r1.cfg }
     r2: { mgmt-ipv4: 172.20.20.20, mgmt-ipv6: 3fff:172:20:20::20, startup-config: configs/r2.cfg }
-    r3: { mgmt-ipv4: 172.20.20.30, mgmt-ipv6: 3fff:172:20:20::30, startup-config: configs/r3.cfg }
-    r4: { mgmt-ipv4: 172.20.20.40, mgmt-ipv6: 3fff:172:20:20::40, startup-config: configs/r4.cfg }
-    r5: { mgmt-ipv4: 172.20.20.50, mgmt-ipv6: 3fff:172:20:20::50, startup-config: configs/r5.cfg }
+    pe1: { mgmt-ipv4: 172.20.20.30, mgmt-ipv6: 3fff:172:20:20::30, startup-config: configs/pe1.cfg }
+    p2: { mgmt-ipv4: 172.20.20.40, mgmt-ipv6: 3fff:172:20:20::40, startup-config: configs/p2.cfg }
+    pe3: { mgmt-ipv4: 172.20.20.50, mgmt-ipv6: 3fff:172:20:20::50, startup-config: configs/pe3.cfg }
     r6: { mgmt-ipv4: 172.20.20.60, mgmt-ipv6: 3fff:172:20:20::60, startup-config: configs/r6.cfg }
 
   links:
     - endpoints: ["r1:Ethernet0/1", "r2:Ethernet0/1"]
     - endpoints: ["r2:Ethernet0/2", "r6:Ethernet0/1"]
-    - endpoints: ["r3:Ethernet0/1", "r4:Ethernet0/1"]
-    - endpoints: ["r4:Ethernet0/2", "r5:Ethernet0/1"]
+    - endpoints: ["pe1:Ethernet0/1", "p2:Ethernet0/1"]
+    - endpoints: ["p2:Ethernet0/2", "pe3:Ethernet0/1"]
