@@ -5,13 +5,13 @@ topology:
     image: vrnetlab/cisco_iol:17.18.02
 
   nodes:
-    r1: { mgmt-ipv4: 172.20.20.10, mgmt-ipv6: 3fff:172:20:20::10, startup-config: configs/r1.cfg }
-    r2: { mgmt-ipv4: 172.20.20.20, mgmt-ipv6: 3fff:172:20:20::20, startup-config: configs/r2.cfg }
-    r3: { mgmt-ipv4: 172.20.20.30, mgmt-ipv6: 3fff:172:20:20::30, startup-config: configs/r3.cfg }
-    r4: { mgmt-ipv4: 172.20.20.40, mgmt-ipv6: 3fff:172:20:20::40, startup-config: configs/r4.cfg }
+    a: { mgmt-ipv4: 172.20.20.10, mgmt-ipv6: 3fff:172:20:20::10, startup-config: configs/a.cfg }
+    b: { mgmt-ipv4: 172.20.20.20, mgmt-ipv6: 3fff:172:20:20::20, startup-config: configs/b.cfg }
+    c: { mgmt-ipv4: 172.20.20.30, mgmt-ipv6: 3fff:172:20:20::30, startup-config: configs/c.cfg }
+    d: { mgmt-ipv4: 172.20.20.40, mgmt-ipv6: 3fff:172:20:20::40, startup-config: configs/d.cfg }
 
   links:
-    - endpoints: ["r1:Ethernet0/1", "r2:Ethernet0/1"]
-    - endpoints: ["r1:Ethernet0/2", "r2:Ethernet0/2"]
-    - endpoints: ["r2:Ethernet0/3", "r4:Ethernet0/1"]
-    - endpoints: ["r2:Ethernet1/0", "r3:Ethernet0/1"]
+    - endpoints: ["a:Ethernet0/1", "b:Ethernet0/1"]
+    - endpoints: ["a:Ethernet0/2", "b:Ethernet0/2"]
+    - endpoints: ["b:Ethernet0/3", "d:Ethernet0/1"]
+    - endpoints: ["b:Ethernet1/0", "c:Ethernet0/1"]
