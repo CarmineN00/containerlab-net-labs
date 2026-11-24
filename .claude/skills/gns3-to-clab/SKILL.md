@@ -1,6 +1,6 @@
 ---
 name: gns3-to-clab
-description: Porta su containerlab un lab nato su GNS3 (lezioni ENARSI/magnetico). Dalle config iniziali GNS3 che l'utente incolla in chat e dal PDF dell'esercizio con la topologia, crea <nome_lab>.clab.yml e i file configs/rX.cfg di startup con il boilerplate standard di containerlab. Usare quando l'utente passa le config iniziali di un nuovo lab e chiede di prepararne il template containerlab.
+description: Porta su containerlab un lab nato su GNS3 (lezioni ENARSI/magnetico). Dalle config iniziali GNS3 che l'utente incolla in chat e dal PDF dell'esercizio con la topologia, crea <nome_lab>.clab.yml e i file configs/<nodo>.cfg di startup (nodi chiamati come nel disegno della topologia) con il boilerplate standard di containerlab. Usare quando l'utente passa le config iniziali di un nuovo lab e chiede di prepararne il template containerlab.
 ---
 
 # GNS3 → containerlab: topologia + startup config
@@ -11,7 +11,7 @@ Input (li fornisce sempre l'utente):
 
 Output, nella directory del lab:
 - `<nome_lab>.clab.yml`
-- `configs/r1.cfg` … `configs/rN.cfg`
+- `configs/<nodo>.cfg` per ogni router, con `<nodo>` = nome dell'apparato nel disegno della topologia (es. `configs/r1.cfg`, `configs/pe1.cfg`)
 
 Se manca il nome/la directory del lab o le config, chiederli. Il nome del lab è quello della directory.
 
@@ -30,8 +30,10 @@ Se manca il nome/la directory del lab o le config, chiederli. Il nome del lab è
 Con Read sul PDF ricavare: numero di router, corrispondenza ruoli ↔ R1..RN (es. "R1 = A (Spoke 1)"), link tra chi e chi, subnet di ogni link, eventuali link usati solo in alcuni scenari, segmenti condivisi. Incrociare con le config: ogni subnet presente su due router = un link.
 
 ### 2. Nodi e mappa delle interfacce
-- Nodi containerlab sempre `r1`…`rN` (ordine del PDF), anche se gli hostname sono A/B/C/D.
 - **Hostname**: quello delle config GNS3 (così i prompt corrispondono al PDF).
+- **Nome del nodo containerlab = nome dell'apparato nel disegno della topologia del PDF**, in minuscolo e senza trattini (`R1` → `r1`, `PE1 (R3)` → `pe1`, `A (Spoke 1)` → `a`). Se il disegno e l'hostname delle config GNS3 non coincidono, vale il disegno, e la differenza va segnalata all'utente. Niente trattini perché `scripts/lab_tools.py` ricava il nome del nodo dall'ultimo pezzo dopo `-` del nome del container.
+- Il file di startup ha lo stesso nome del nodo (`configs/pe1.cfg`): `lab_tools.py export-configs` salva in `configs/<nodo>.cfg`, quindi con nomi diversi l'export non aggiornerebbe il file usato dal deploy.
+- **Numero N del router** = posizione nel PDF (R3 = PE1 → N = 3): determina l'IP di management `172.20.20.N0` / `3fff:172:20:20::N0`, indipendentemente dal nome.
 - Interfacce IOL: `Ethernet0/0` è riservata al management. Le porte dati sono `Ethernet0/1`–`0/3`, poi `Ethernet1/0`–`1/3`, ecc. (4 per slot).
 - Le interfacce GNS3 (`GigabitEthernet0/0`, `Ethernet0/0.17`, …) si mappano sulle porte dati in ordine, router per router. Mostrare la mappa all'utente in una tabella link → porte (vedi riepilogo).
 
@@ -47,17 +49,17 @@ topology:
 
   nodes:
     r1: { mgmt-ipv4: 172.20.20.10, mgmt-ipv6: 3fff:172:20:20::10, startup-config: configs/r1.cfg }
-    r2: { mgmt-ipv4: 172.20.20.20, mgmt-ipv6: 3fff:172:20:20::20, startup-config: configs/r2.cfg }
-    # rN: 172.20.20.N0 / 3fff:172:20:20::N0
+    pe1: { mgmt-ipv4: 172.20.20.30, mgmt-ipv6: 3fff:172:20:20::30, startup-config: configs/pe1.cfg }
+    # <nodo>: 172.20.20.N0 / 3fff:172:20:20::N0 (N = posizione nel PDF)
 
   links:
-    - endpoints: ["r1:Ethernet0/1", "r2:Ethernet0/1"]
+    - endpoints: ["r1:Ethernet0/1", "pe1:Ethernet0/1"]
 ```
 
 `mgmt-ipv6` va fissato: senza, Docker assegna l'IPv6 in modo dinamico e non coinciderebbe con quello scritto nel `.cfg`. Niente commenti superflui nel file.
 
-### 4. `configs/rX.cfg`
-Per ogni router: copiare `templates/base.cfg`, sostituire `{{HOSTNAME}}`, `{{N}}` (numero del router: r3 → `30`, `::30`) e `{{LAB_CONFIG}}` con la config GNS3 tradotta:
+### 4. `configs/<nodo>.cfg`
+Per ogni router: copiare `templates/base.cfg`, sostituire `{{HOSTNAME}}`, `{{N}}` (posizione nel PDF: R3 = PE1 → `30`, `::30`) e `{{LAB_CONFIG}}` con la config GNS3 tradotta:
 - interfacce del lab (Loopback e porte dati della mappa), ognuna chiusa da `!`;
 - le porte dati non usate dello slot 0 (`Ethernet0/1`–`0/3`) come `no ip address` + `shutdown`;
 - eventuali comandi globali del lab presenti nelle config GNS3 (route statiche, processi di routing già previsti, ecc.).
@@ -79,6 +81,7 @@ Quando conferma che il lab è su, collegarsi io in SSH (netmiko dal `venv/` del 
 
 ### 6. Riepilogo all'utente
 - tabella link (subnet/ex VLAN) → porte per router;
+- eventuali nomi del disegno della topologia diversi dagli hostname delle config GNS3;
 - eventuali task del PDF che con i link fisici non si possono riprodurre così come sono;
 - eventuale bridge da creare prima del deploy;
 - comandi di deploy;
