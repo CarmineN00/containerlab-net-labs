@@ -21,7 +21,7 @@ Labs from the ENARSI and ENCOR Hands-On v1.0 courses by [Magnetico Associazione 
 | LAB07 | OSPF | [`rs-lab07-ospf`](rs-lab07-ospf/) | ✅ done |
 | LAB08 | PBR and route redistribution | [`rs-lab08-pbr-route-redistribution`](rs-lab08-pbr-route-redistribution/) | ✅ done |
 | LAB09 | uRPF, IP SLA, NetFlow, Archive | [`rs-lab09-rpf-ip-sla-netflow-archive`](rs-lab09-rpf-ip-sla-netflow-archive/) | ✅ done |
-| LAB10 | OSPFv3 address families | [`rs-lab10-ospfv3-af`](rs-lab10-ospfv3-af/) | 🧩 template ready |
+| LAB10 | OSPFv3 address families | [`rs-lab10-ospfv3-af`](rs-lab10-ospfv3-af/) | ✅ done |
 | LAB11 | BGP TTL control, loopback peering and IPv6 | [`rs-lab11-bgp-ttl-peering-ipv6`](rs-lab11-bgp-ttl-peering-ipv6/) | 🧩 template ready |
 | LAB12 | MPLS LDP and L3VPN | [`rs-lab12-mpls-ldp-l3vpn`](rs-lab12-mpls-ldp-l3vpn/) | 🧩 template ready |
 
